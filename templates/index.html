@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CO₂ Emissions Counter</title>
+    <meta name="description" content="Real-time global CO₂ emissions counter and visualization">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <nav class="nav-menu">
+            <button class="nav-toggle" aria-label="Toggle navigation menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <line x1="4" y1="8" x2="20" y2="8"></line>
+                    <line x1="4" y1="16" x2="20" y2="16"></line>
+                </svg>
+            </button>
+            <div class="nav-dropdown">
+                <a href="#counter-section" class="nav-item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                    <span>Real-Time Counter</span>
+                </a>
+                <a href="#chart-section" class="nav-item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <line x1="18" y1="20" x2="18" y2="10"/>
+                        <line x1="12" y1="20" x2="12" y2="4"/>
+                        <line x1="6" y1="20" x2="6" y2="14"/>
+                    </svg>
+                    <span>Emissions Charts</span>
+                </a>
+                <a href="#faq-section" class="nav-item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                        <line x1="12" y1="17" x2="12.01" y2="17"/>
+                    </svg>
+                    <span>FAQ</span>
+                </a>
+                <a href="#footer" class="nav-item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="16" x2="12" y2="12"/>
+                        <line x1="12" y1="8" x2="12.01" y2="8"/>
+                    </svg>
+                    <span>About</span>
+                </a>
+            </div>
+        </nav>
+        <main>
+            <div class="counter-container" id="counter-section">
+                <div class="title">
+                    <span class="leaf-icon">🌳</span>
+                    <h1>Global CO<sub>2</sub> Emissions</h1>
+                </div>
+                
+                <div class="counters-grid">
+                    <div class="counter-box">
+                        <div class="counter-header">
+                            <h2>Global CO₂ Emissions
+                                <button class="info-button global-info" aria-label="Global emissions counter information">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2"/>
+                                        <path d="M12 16V12M12 8H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                    </svg>
+                                </button>
+                                <div class="info-tooltip global-tooltip">
+                                    This counter tracks the total metric tons of CO₂ emitted since you opened this page. It serves as a real-time reminder of the ongoing impact of carbon emissions on our planet. Every second, greenhouse gases are released into the atmosphere from various sources, highlighting the urgency for action to reduce our carbon footprint and combat climate change.
+                                </div>
+                            </h2>
+                        </div>
+                        <div class="counter">
+                            <span id="totalEmissions">0</span>
+                        </div>
+                        <p class="subtitle">Metric Tons of CO<sub>2</sub> since you<br>opened this page</p>
+                        <p class="time-ago" id="timeAgo">0 seconds ago</p>
+                    </div>
+
+                    <div class="counter-box country-counter">
+                        <div class="counter-header">
+                            <h2>Country CO₂ Emissions
+                                <button class="info-button country-info" aria-label="Country counter information">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2"/>
+                                        <path d="M12 16V12M12 8H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                    </svg>
+                                </button>
+                                <div class="info-tooltip country-tooltip">
+                                    This counter shows the selected country's contribution to global CO₂ emissions. The percentage is based on the most recent data, reflecting each nation's impact on total global emissions. Select different countries to compare their emissions and understand their relative environmental impact.
+                                </div>
+                            </h2>
+                        </div>
+                        <div class="counter">
+                            <span id="countryEmissions">0</span>
+                        </div>
+                        <p class="subtitle">Metric Tons of CO<sub>2</sub> since page load</p>
+                        <div class="country-selector">
+                            <select id="countrySelect" class="country-dropdown">
+                                <option value="china">China</option>
+                                <option value="us">United States</option>
+                                <option value="india">India</option>
+                                <option value="russia">Russia</option>
+                                <option value="japan">Japan</option>
+                                <option value="germany">Germany</option>
+                                <option value="iran">Iran</option>
+                                <option value="skorea">South Korea</option>
+                                <option value="saudi">Saudi Arabia</option>
+                                <option value="indonesia">Indonesia</option>
+                            </select>
+                        </div>
+                        <p class="country-info" id="countryInfo"></p>
+                    </div>
+                </div>
+
+                <div class="yearly-counter-container">
+                    <div class="counter-box yearly-counter">
+                        <div class="counter-header">
+                            <h2>Yearly Emissions
+                                <button class="info-button yearly-info" aria-label="Yearly emissions counter information">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2"/>
+                                        <path d="M12 16V12M12 8H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                    </svg>
+                                </button>
+                                <div class="info-tooltip yearly-tooltip">
+                                    The counter represents a continuous real-time measurement of global carbon dioxide release, highlighting the urgent need for comprehensive climate action and sustainable practices to mitigate environmental impact.
+                                </div>
+                            </h2>
+                        </div>
+                        <div class="counter">
+                            <span id="yearlyEmissions">0</span>
+                        </div>
+                        <p class="subtitle">Metric Tons of CO<sub>2</sub> in 2025</p>
+                        <p class="time-info">Since January 1st, 2025</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-panels">
+                <div class="panel impact">
+                    <h2>⚠️ Impact</h2>
+                    <p>Each second, approximately 1,100 metric tons of CO₂ are released into the atmosphere globally.</p>
+                </div>
+
+                <div class="panel action">
+                    <h2>ℹ️ Take Action</h2>
+                    <p>Reduce your carbon footprint by using renewable energy, reducing waste, and choosing sustainable transportation.</p>
+                </div>
+            </div>
+
+            <div class="chart-section" id="chart-section">
+                <div class="chart-navigation">
+                    <button class="nav-button prev" aria-label="Previous chart">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <div class="chart-titles">
+                        <h2 class="chart-title">
+                            Countries with Largest CO₂ Emissions
+                            <button class="info-button country-info" aria-label="Country chart information">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 16V12M12 8H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                            </button>
+                            <div class="info-tooltip country-tooltip">
+                                This bar chart illustrates the top 10 countries with the largest CO₂ emissions in 2022-2023. China leads with 32.88% of global emissions, followed by the United States at 12.6%. India, Russia, and Japan round out the top five. The data highlights the significant impact of industrial activities, energy production, and population size on emissions. Notably, China's emissions exceed the combined total of the next three highest emitters.
+                            </div>
+                        </h2>
+                        <h2 class="chart-title" style="display: none;">
+                            Product Carbon Footprint
+                            <button class="info-button product-info" aria-label="Product chart information">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 16V12M12 8H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                            </button>
+                            <div class="info-tooltip product-tooltip">
+                                Average carbon footprint of common consumer items. Manufacturing processes and materials significantly impact emissions. Electronics like laptops (350 kg) have the highest footprint, while everyday items like plastic bottles (0.1 kg) have relatively lower impact. Understanding these values helps consumers make environmentally conscious choices.
+                            </div>
+                        </h2>
+                        <h2 class="chart-title" style="display: none;">
+                            City Emissions Impact
+                            <button class="info-button city-info" aria-label="City chart information">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 16V12M12 8H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                            </button>
+                            <div class="info-tooltip city-tooltip">
+                                Annual CO₂ emissions by major cities (2022-2023). Shanghai leads with 275.28 million metric tons, primarily from industrial activities. Tokyo (250 Mt) and NYC (160 Mt) follow, with emissions mainly from transportation and energy. These cities represent major industrial and economic hubs where targeted emission reduction efforts could have significant impact.
+                            </div>
+                        </h2>
+                    </div>
+                    <button class="nav-button next" aria-label="Next chart">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="chart-dots"></div>
+                <div class="charts-wrapper">
+                    <div class="chart-container" id="countryChart">
+                        <canvas height="400"></canvas>
+                    </div>
+                    <div class="chart-container" id="productChart" style="display: none;">
+                        <canvas height="400"></canvas>
+                    </div>
+                    <div class="chart-container" id="cityChart" style="display: none;">
+                        <canvas height="400"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-section" id="faq-section">
+                <h2>Frequently Asked Questions</h2>
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>What are greenhouse gases and how do they contribute to global warming?</span>
+                            <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            Greenhouse gases (GHGs) are gases that trap heat in Earth's atmosphere. The main GHGs include carbon dioxide (CO₂), methane, and nitrous oxide. They act like a blanket around Earth, trapping heat and causing the planet's temperature to rise. This process is known as the greenhouse effect, and while it's natural and necessary for life, excessive GHGs from human activities are causing dangerous levels of global warming.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>Why is CO₂ considered the most important greenhouse gas?</span>
+                            <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            CO₂ is considered the most important greenhouse gas because it's the most abundant GHG produced by human activities. It has a long atmospheric lifetime and is responsible for about 80% of global warming. The main sources are burning fossil fuels, deforestation, and industrial processes. While other GHGs like methane have stronger warming effects, CO₂'s abundance and persistence make it the primary driver of climate change.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>How do everyday activities contribute to CO₂ emissions?</span>
+                            <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            Many daily activities contribute to CO₂ emissions. Transportation (driving, flying), energy use (electricity, heating), food consumption (especially meat and dairy), and purchasing goods all have carbon footprints. Even simple actions like charging phones or using the internet require energy, often from fossil fuel sources. Understanding these impacts helps us make more environmentally conscious choices.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>What can individuals do to reduce their carbon footprint?</span>
+                            <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            Individuals can reduce their carbon footprint in several ways: using public transportation or electric vehicles, improving home energy efficiency, reducing meat consumption, choosing renewable energy sources, minimizing waste, and supporting sustainable products. Small changes in daily habits, when multiplied across millions of people, can have significant positive impacts on reducing global CO₂ emissions.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>What was the level of global CO₂ emissions in 2022?</span>
+                            <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            In 2022, global energy-related CO₂ emissions grew by 0.9% to reach a new high of over 36.8 Gt (gigatonnes). This increase occurred despite the growth of clean energy technologies and was driven by factors such as increased fossil fuel use in power generation and industrial activities.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>What is the Paris Agreement?</span>
+                            <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            The Paris Agreement is a legally binding international treaty on climate change, adopted in 2015. It aims to limit global warming to well below 2°C, preferably to 1.5°C, compared to pre-industrial levels. Countries submit their plans for climate action (NDCs) every five years, with increasingly ambitious targets for reducing emissions.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>What is carbon sequestration?</span>
+                            <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            Carbon sequestration is the process of capturing and storing atmospheric carbon dioxide. Natural sequestration occurs through forests, oceans, and soil, while artificial methods include carbon capture and storage (CCS) technology. This process is crucial for mitigating climate change by reducing the amount of CO₂ in the atmosphere.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>How does deforestation contribute to emissions?</span>
+                            <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            Deforestation contributes to emissions in two major ways: first, when trees are cut down or burned, they release their stored carbon into the atmosphere. Second, removing forests reduces Earth's capacity to absorb CO₂ through photosynthesis. Deforestation accounts for about 10% of global greenhouse gas emissions.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>What role does renewable energy play?</span>
+                            <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            Renewable energy sources like solar, wind, and hydropower produce little to no greenhouse gas emissions during operation. They play a crucial role in reducing global CO₂ emissions by replacing fossil fuel-based energy sources. The transition to renewables is essential for meeting global climate goals and creating a sustainable energy future.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>How do oceans help with CO₂ absorption?</span>
+                            <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            Oceans are vital carbon sinks, absorbing about 25% of human-produced CO₂ emissions. This happens through two main processes: dissolution (CO₂ dissolving into seawater) and the biological pump (marine organisms using CO₂ for photosynthesis or building shells). However, increased absorption is leading to ocean acidification, threatening marine ecosystems.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>What is the urban heat island effect?</span>
+                            <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            The urban heat island effect occurs when cities experience higher temperatures than surrounding rural areas. This happens because urban materials like concrete and asphalt absorb and retain more heat, and there's less vegetation for cooling. This effect increases energy consumption for cooling, leading to higher CO₂ emissions.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>How does agriculture impact emissions?</span>
+                            <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            Agriculture contributes to emissions through multiple channels: livestock producing methane, soil management releasing nitrous oxide, deforestation for farmland, and energy use in farming operations. Livestock alone accounts for about 14.5% of global greenhouse gas emissions, with beef production being particularly carbon-intensive.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>How does transportation impact emissions?</span>
+                            <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            Transportation accounts for about 20% of global CO₂ emissions. Road vehicles contribute the most, followed by aviation and shipping. Personal vehicles are responsible for nearly half of transport emissions. The shift to electric vehicles, improved public transit, and sustainable aviation fuels are key strategies for reducing these emissions.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>What is a carbon tax?</span>
+                            <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            A carbon tax is a fee imposed on the burning of carbon-based fuels (coal, oil, gas). It's designed to make using fossil fuels more expensive, thereby encouraging businesses and individuals to reduce consumption and switch to clean energy alternatives. The revenue generated often supports climate initiatives or is returned to citizens as dividends.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>What is the difference between carbon neutral and net-zero?</span>
+                            <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            Carbon neutral means balancing CO₂ emissions with an equivalent amount of carbon removal or offsets. Net-zero is more comprehensive, requiring all greenhouse gas emissions to be reduced as close to zero as possible, with any remaining emissions permanently removed from the atmosphere. Net-zero is considered more rigorous and is the global standard for climate action.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>How do buildings contribute to emissions?</span>
+                            <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            Buildings are responsible for about 40% of global energy-related CO₂ emissions. This includes both operational emissions (from heating, cooling, and electricity use) and embodied carbon (from construction materials and processes). Improving energy efficiency, using sustainable materials, and implementing smart building technologies can significantly reduce these emissions.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>What are carbon offsets?</span>
+                            <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            Carbon offsets are reductions in CO₂ emissions made to compensate for emissions elsewhere. This can include projects like forest conservation, renewable energy development, or methane capture. While offsets can be part of a climate strategy, they should not be seen as a substitute for direct emissions reductions. The quality and verification of offset projects is crucial for their effectiveness.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>How does technology help reduce emissions?</span>
+                            <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            Technology plays a crucial role through innovations like renewable energy systems, energy storage, electric vehicles, smart grids, and carbon capture. Digital technologies help optimize energy use in buildings and industrial processes. Artificial intelligence and data analytics are increasingly used to identify and implement emissions reduction opportunities across sectors.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>What is the carbon cycle?</span>
+                            <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            The carbon cycle is the natural process by which carbon moves between the Earth's atmosphere, land, oceans, and living organisms. Plants absorb CO₂ during photosynthesis, animals release it through respiration, and it's exchanged between air and water. Human activities have disrupted this natural cycle by adding excess CO₂ to the atmosphere faster than it can be removed.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>What are scope 1, 2, and 3 emissions?</span>
+                            <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            These are categories of emissions used in carbon accounting. Scope 1 covers direct emissions from owned sources (e.g., company vehicles). Scope 2 includes indirect emissions from purchased electricity and energy. Scope 3 encompasses all other indirect emissions in a company's value chain (e.g., supplier emissions, employee commuting, product use). Scope 3 typically represents the largest share of emissions.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="site-footer" id="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About</h3>
+                    <p>This real-time counter aims to raise awareness about global CO₂ emissions and their impact on climate change.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Data Sources</h3>
+                    <p>Our data is sourced from reputable organizations including the IPCC, IEA, and Global Carbon Project.</p>
+                </div>
+                <div class="footer-section">
+                    <p class="copyright">&copy; 2025 CO₂ Emissions Counter | <a href="/disclaimer" class="footer-link">Disclaimer</a></p>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script src="/static/js/script.js"></script>
+</body>
+</html>
