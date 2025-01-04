@@ -15,7 +15,7 @@ A web application that displays real-time global carbon emissions data with an e
 
 ## Live Demo
 
-Visit the live site: [CO₂ Emissions Counter](#) (URL will be updated after deployment)
+Visit the live site: [CO₂ Emissions Counter](https://carbonemissionscounter.netlify.app/)
 
 ## Technology Stack
 
