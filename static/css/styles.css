@@ -1154,3 +1154,88 @@ main {
     font-size: 0.9em;
     border-top: 1px solid #ddd;
 }
+
+/* Media Queries for Responsive Design */
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 0.5rem;
+    }
+
+    .counter-container {
+        padding: 1.5rem;
+    }
+
+    .counters-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .title h1 {
+        font-size: 1.5rem;
+    }
+
+    .counter {
+        font-size: 2.5rem;
+    }
+
+    .yearly-counter .counter {
+        font-size: 3rem;
+    }
+
+    .info-panels {
+        grid-template-columns: 1fr;
+    }
+
+    .info-tooltip {
+        width: 280px;
+    }
+
+    .chart-section {
+        padding: 1rem;
+    }
+
+    .charts-wrapper {
+        padding: 0.5rem;
+    }
+
+    .chart-container {
+        min-height: 300px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .counter-container {
+        padding: 1rem;
+    }
+
+    .title {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .title h1 {
+        font-size: 1.3rem;
+        flex-direction: column;
+    }
+
+    .counter {
+        font-size: 2rem;
+    }
+
+    .yearly-counter .counter {
+        font-size: 2.5rem;
+    }
+
+    .subtitle {
+        font-size: 0.9rem;
+    }
+
+    .faq-question span {
+        font-size: 0.9rem;
+    }
+
+    .faq-answer {
+        font-size: 0.9rem;
+        padding: 0.75rem;
+    }
+}
