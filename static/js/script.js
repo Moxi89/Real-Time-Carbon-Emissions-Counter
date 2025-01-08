@@ -58,10 +58,22 @@ document.addEventListener('DOMContentLoaded', function() {
     const countrySelect = document.getElementById('countrySelect');
 
     function formatNumber(num) {
-        return num.toLocaleString('en-US', {
-            maximumFractionDigits: 2,
-            minimumFractionDigits: 2
-        });
+        if (num >= 1000000) {
+            // For numbers >= 1 million, show 2 decimal places
+            return num.toLocaleString('en-US', {
+                maximumFractionDigits: 2,
+                minimumFractionDigits: 2
+            });
+        } else if (num >= 1000) {
+            // For numbers >= 1000 but < 1 million, show 1 decimal place
+            return num.toLocaleString('en-US', {
+                maximumFractionDigits: 1,
+                minimumFractionDigits: 1
+            });
+        } else {
+            // For smaller numbers, show no decimal places
+            return Math.round(num).toLocaleString('en-US');
+        }
     }
 
     function updateEmissions() {
@@ -70,12 +82,12 @@ document.addEventListener('DOMContentLoaded', function() {
         // Calculate total emissions since January 1st, 2025
         const totalSecondsElapsed = (currentTime - startOfYear) / 1000;
         const totalEmissions = EMISSIONS_PER_SECOND * totalSecondsElapsed;
-        yearlyEmissionsElement.textContent = Math.floor(totalEmissions).toLocaleString();
+        yearlyEmissionsElement.textContent = formatNumber(totalEmissions);
         
         // Calculate emissions since page load
         const pageLoadSecondsElapsed = (currentTime - pageLoadTime) / 1000;
         const currentEmissions = EMISSIONS_PER_SECOND * pageLoadSecondsElapsed;
-        totalEmissionsElement.textContent = Math.floor(currentEmissions).toLocaleString();
+        totalEmissionsElement.textContent = formatNumber(currentEmissions);
         
         // Update country-specific emissions based on page load time
         const selectedCountry = countrySelect.value;
