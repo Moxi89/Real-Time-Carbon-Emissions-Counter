@@ -1239,3 +1239,108 @@ main {
         padding: 0.75rem;
     }
 }
+
+/* Mobile responsiveness fixes */
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 0.5rem;
+        width: 100%;
+    }
+
+    .counter-container {
+        padding: 1.5rem;
+        margin: 1rem 0;
+    }
+
+    .counters-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .title h1 {
+        font-size: 1.5rem;
+    }
+
+    .counter {
+        font-size: 2.5rem;
+    }
+
+    .yearly-counter .counter {
+        font-size: 3rem;
+    }
+
+    .info-tooltip {
+        width: 280px;
+        font-size: 13px;
+    }
+
+    .chart-section {
+        padding: 1rem;
+        margin: 1rem 0;
+    }
+
+    .chart-container {
+        height: 300px;
+    }
+
+    .chart-title {
+        font-size: 1.2rem;
+    }
+
+    .faq-section h2 {
+        font-size: 1.5rem;
+    }
+
+    .faq-question {
+        padding: 1rem;
+        font-size: 0.9rem;
+    }
+
+    .faq-answer {
+        font-size: 0.9rem;
+    }
+
+    .nav-dropdown {
+        width: 100%;
+        right: 0;
+        left: 0;
+        border-radius: 0;
+        margin-top: 0;
+        position: fixed;
+        background: var(--primary-bg);
+    }
+
+    .nav-dropdown.active {
+        height: auto;
+        max-height: calc(100vh - 60px);
+        overflow-y: auto;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .counter {
+        font-size: 2rem;
+    }
+
+    .yearly-counter .counter {
+        font-size: 2.5rem;
+    }
+
+    .title {
+        flex-direction: column;
+    }
+
+    .leaf-icon {
+        font-size: 1.5rem;
+    }
+
+    .chart-navigation {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .nav-button {
+        width: 36px;
+        height: 36px;
+    }
+}
