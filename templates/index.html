@@ -21,13 +21,14 @@
     </div>
     <div class="container">
         <nav class="nav-menu">
-            <button class="nav-toggle" aria-label="Toggle navigation menu">
+            <button type="button" class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                    <line x1="4" y1="8" x2="20" y2="8"></line>
-                    <line x1="4" y1="16" x2="20" y2="16"></line>
+                    <line x1="4" y1="12" x2="20" y2="12"></line>
+                    <line x1="4" y1="6" x2="20" y2="6"></line>
+                    <line x1="4" y1="18" x2="20" y2="18"></line>
                 </svg>
             </button>
-            <div class="nav-dropdown">
+            <div class="nav-dropdown" aria-hidden="true">
                 <a href="#counter-section" class="nav-item">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
                         <circle cx="12" cy="12" r="10"/>

@@ -566,6 +566,16 @@ nav.nav-menu {
     z-index: 1001;
 }
 
+.nav-toggle:hover {
+    background: rgba(74, 226, 144, 0.1);
+}
+
+.nav-toggle svg {
+    width: 24px;
+    height: 24px;
+    stroke: currentColor;
+}
+
 .nav-dropdown {
     display: flex;
     gap: 1rem;
@@ -589,10 +599,17 @@ nav.nav-menu {
         flex-direction: column;
         gap: 0.5rem;
         z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
     }
 
     .nav-dropdown.active {
         display: flex;
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
     }
 
     .nav-dropdown a {
@@ -600,10 +617,11 @@ nav.nav-menu {
         text-decoration: none;
         padding: 0.8rem 1rem;
         border-radius: 0.5rem;
-        transition: background-color 0.2s ease;
+        transition: all 0.2s ease;
         display: flex;
         align-items: center;
         gap: 0.5rem;
+        white-space: nowrap;
     }
 
     .nav-dropdown a:hover {
