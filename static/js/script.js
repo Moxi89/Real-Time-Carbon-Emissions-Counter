@@ -494,4 +494,24 @@ document.addEventListener('DOMContentLoaded', function() {
             mainNav.style.display = 'none';
         }
     });
+
+    // Add smooth scrolling behavior for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                // Close the navigation menu if it's open (for mobile)
+                const navDropdown = document.querySelector('.nav-dropdown');
+                if (navDropdown.classList.contains('active')) {
+                    navDropdown.classList.remove('active');
+                }
+            }
+        });
+    });
 });

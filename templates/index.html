@@ -6,6 +6,7 @@
     <title>CO₂ Emissions Counter</title>
     <meta name="description" content="Real-time global CO₂ emissions counter and visualization">
     <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -52,14 +53,14 @@
             </div>
         </nav>
         <main>
-            <div class="counter-container" id="counter-section">
-                <div class="title">
+            <div class="counter-container" id="counter-section" data-aos="fade-up" data-aos-duration="600">
+                <div class="title" data-aos="fade-right" data-aos-duration="600">
                     <span class="leaf-icon">🌳</span>
                     <h1>Carbon Emissions Counter Live</h1>
                 </div>
                 
                 <div class="counters-grid">
-                    <div class="counter-box">
+                    <div class="counter-box" data-aos="fade-up" data-aos-duration="600" data-aos-delay="100">
                         <div class="counter-header">
                             <h2>Global CO₂ Emissions
                                 <button class="info-button global-info" aria-label="Global emissions counter information">
@@ -80,7 +81,7 @@
                         <p class="time-ago" id="timeAgo">0 seconds ago</p>
                     </div>
 
-                    <div class="counter-box country-counter">
+                    <div class="counter-box country-counter" data-aos="fade-up" data-aos-duration="600" data-aos-delay="200">
                         <div class="counter-header">
                             <h2>Country CO₂ Emissions
                                 <button class="info-button country-info" aria-label="Country counter information">
@@ -153,7 +154,7 @@
             </div>
 
             <div class="chart-section" id="chart-section">
-                <div class="chart-navigation">
+                <div class="chart-navigation" data-aos="fade-right" data-aos-duration="600">
                     <button class="nav-button prev" aria-label="Previous chart">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -205,22 +206,22 @@
                 </div>
                 <div class="chart-dots"></div>
                 <div class="charts-wrapper">
-                    <div class="chart-container" id="countryChart">
+                    <div class="chart-container" id="countryChart" data-aos="zoom-in" data-aos-duration="600">
                         <canvas height="400"></canvas>
                     </div>
-                    <div class="chart-container" id="productChart" style="display: none;">
+                    <div class="chart-container" id="productChart" data-aos="zoom-in" data-aos-duration="600">
                         <canvas height="400"></canvas>
                     </div>
-                    <div class="chart-container" id="cityChart" style="display: none;">
+                    <div class="chart-container" id="cityChart" data-aos="zoom-in" data-aos-duration="600">
                         <canvas height="400"></canvas>
                     </div>
                 </div>
             </div>
 
             <div class="faq-section" id="faq-section">
-                <h2>Frequently Asked Questions</h2>
+                <h2 data-aos="fade-down" data-aos-duration="600">Frequently Asked Questions</h2>
                 <div class="faq-list">
-                    <div class="faq-item">
+                    <div class="faq-item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="50">
                         <button class="faq-question">
                             <span>What are greenhouse gases and how do they contribute to global warming?</span>
                             <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -232,7 +233,7 @@
                         </div>
                     </div>
 
-                    <div class="faq-item">
+                    <div class="faq-item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="100">
                         <button class="faq-question">
                             <span>Why is CO₂ considered the most important greenhouse gas?</span>
                             <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -244,7 +245,7 @@
                         </div>
                     </div>
 
-                    <div class="faq-item">
+                    <div class="faq-item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="150">
                         <button class="faq-question">
                             <span>How do everyday activities contribute to CO₂ emissions?</span>
                             <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -256,7 +257,7 @@
                         </div>
                     </div>
 
-                    <div class="faq-item">
+                    <div class="faq-item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="200">
                         <button class="faq-question">
                             <span>What can individuals do to reduce their carbon footprint?</span>
                             <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -268,7 +269,7 @@
                         </div>
                     </div>
 
-                    <div class="faq-item">
+                    <div class="faq-item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="250">
                         <button class="faq-question">
                             <span>What was the level of global CO₂ emissions in 2022?</span>
                             <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -280,7 +281,7 @@
                         </div>
                     </div>
 
-                    <div class="faq-item">
+                    <div class="faq-item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="300">
                         <button class="faq-question">
                             <span>What is the Paris Agreement?</span>
                             <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -292,7 +293,7 @@
                         </div>
                     </div>
 
-                    <div class="faq-item">
+                    <div class="faq-item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="350">
                         <button class="faq-question">
                             <span>What is carbon sequestration?</span>
                             <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -304,7 +305,7 @@
                         </div>
                     </div>
 
-                    <div class="faq-item">
+                    <div class="faq-item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="400">
                         <button class="faq-question">
                             <span>How does deforestation contribute to emissions?</span>
                             <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -316,7 +317,7 @@
                         </div>
                     </div>
 
-                    <div class="faq-item">
+                    <div class="faq-item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="450">
                         <button class="faq-question">
                             <span>What role does renewable energy play?</span>
                             <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -328,7 +329,7 @@
                         </div>
                     </div>
 
-                    <div class="faq-item">
+                    <div class="faq-item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="500">
                         <button class="faq-question">
                             <span>How do oceans help with CO₂ absorption?</span>
                             <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -340,7 +341,7 @@
                         </div>
                     </div>
 
-                    <div class="faq-item">
+                    <div class="faq-item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="550">
                         <button class="faq-question">
                             <span>What is the urban heat island effect?</span>
                             <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -352,7 +353,7 @@
                         </div>
                     </div>
 
-                    <div class="faq-item">
+                    <div class="faq-item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="600">
                         <button class="faq-question">
                             <span>How does agriculture impact emissions?</span>
                             <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -364,7 +365,7 @@
                         </div>
                     </div>
 
-                    <div class="faq-item">
+                    <div class="faq-item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="650">
                         <button class="faq-question">
                             <span>How does transportation impact emissions?</span>
                             <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -376,7 +377,7 @@
                         </div>
                     </div>
 
-                    <div class="faq-item">
+                    <div class="faq-item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="700">
                         <button class="faq-question">
                             <span>What is a carbon tax?</span>
                             <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -388,7 +389,7 @@
                         </div>
                     </div>
 
-                    <div class="faq-item">
+                    <div class="faq-item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="750">
                         <button class="faq-question">
                             <span>What is the difference between carbon neutral and net-zero?</span>
                             <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -400,7 +401,7 @@
                         </div>
                     </div>
 
-                    <div class="faq-item">
+                    <div class="faq-item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="800">
                         <button class="faq-question">
                             <span>How do buildings contribute to emissions?</span>
                             <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -412,7 +413,7 @@
                         </div>
                     </div>
 
-                    <div class="faq-item">
+                    <div class="faq-item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="850">
                         <button class="faq-question">
                             <span>What are carbon offsets?</span>
                             <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -424,7 +425,7 @@
                         </div>
                     </div>
 
-                    <div class="faq-item">
+                    <div class="faq-item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="900">
                         <button class="faq-question">
                             <span>How does technology help reduce emissions?</span>
                             <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -436,7 +437,7 @@
                         </div>
                     </div>
 
-                    <div class="faq-item">
+                    <div class="faq-item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="950">
                         <button class="faq-question">
                             <span>What is the carbon cycle?</span>
                             <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -448,7 +449,7 @@
                         </div>
                     </div>
 
-                    <div class="faq-item">
+                    <div class="faq-item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="1000">
                         <button class="faq-question">
                             <span>What are scope 1, 2, and 3 emissions?</span>
                             <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -462,7 +463,7 @@
                 </div>
             </div>
         </main>
-        <footer class="site-footer" id="footer">
+        <footer class="site-footer" id="footer" data-aos="fade-up" data-aos-duration="600">
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>About</h3>
@@ -479,5 +480,15 @@
         </footer>
     </div>
     <script src="/static/js/script.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 600,
+            offset: 50,
+            once: true,
+            easing: 'ease-out',
+            delay: 0
+        });
+    </script>
 </body>
 </html>
