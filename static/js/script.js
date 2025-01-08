@@ -413,73 +413,39 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Navigation menu
-    const navMenu = document.querySelector('.nav-menu');
-    const navToggle = document.querySelector('.nav-toggle');
-    const navLinks = document.querySelectorAll('.nav-item');
+    // Simple Menu Toggle
+    const menuBtn = document.querySelector('.nav-toggle');
+    const menuItems = document.querySelector('.nav-items');
 
-    // Toggle menu
-    navToggle.addEventListener('click', function(e) {
-        e.stopPropagation();
-        navMenu.classList.toggle('active');
-    });
+    if (menuBtn && menuItems) {
+        menuBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent click from bubbling to document
+            menuBtn.classList.toggle('active');
+            menuItems.classList.toggle('show');
+        });
 
-    // Close menu when clicking outside
-    document.addEventListener('click', function(event) {
-        if (!navMenu.contains(event.target)) {
-            navMenu.classList.remove('active');
-        }
-    });
+        // Close menu when clicking a link
+        const menuLinks = menuItems.querySelectorAll('a');
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menuBtn.classList.remove('active');
+                menuItems.classList.remove('show');
+            });
+        });
 
-    // Handle navigation links
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            navMenu.classList.remove('active');
-            
-            const targetId = this.getAttribute('href');
-            const targetSection = document.querySelector(targetId);
-            
-            if (targetSection) {
-                targetSection.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!menuBtn.contains(e.target) && !menuItems.contains(e.target)) {
+                menuBtn.classList.remove('active');
+                menuItems.classList.remove('show');
             }
         });
-    });
 
-    // Menu Toggle
-    document.addEventListener('DOMContentLoaded', () => {
-        const menuButton = document.querySelector('.nav-toggle');
-        const menuDropdown = document.querySelector('.nav-dropdown');
-
-        if (menuButton && menuDropdown) {
-            menuButton.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                menuButton.classList.toggle('active');
-                menuDropdown.classList.toggle('active');
-                console.log('Menu button clicked'); // Debug log
-            });
-
-            // Close menu when clicking a link
-            menuDropdown.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', (e) => {
-                    menuButton.classList.remove('active');
-                    menuDropdown.classList.remove('active');
-                });
-            });
-
-            // Close menu when clicking outside
-            document.addEventListener('click', (e) => {
-                if (!menuButton.contains(e.target) && !menuDropdown.contains(e.target)) {
-                    menuButton.classList.remove('active');
-                    menuDropdown.classList.remove('active');
-                }
-            });
-        }
-    });
+        // Prevent menu from closing when clicking inside it
+        menuItems.addEventListener('click', (e) => {
+            e.stopPropagation(); // Stop click from reaching the document
+        });
+    }
 
     // Add smooth scrolling behavior for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
