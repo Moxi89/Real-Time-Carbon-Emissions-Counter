@@ -1,16 +1,9 @@
 name = "carbon-emissions-counter"
+main = "worker.js"
 compatibility_date = "2024-01-10"
-
-[build]
-command = "pip install -r requirements.txt"
 
 [site]
 bucket = "./static"
-entry-point = "app"
-
-[[routes]]
-pattern = "/*"
-script = "functions/_middleware.py"
 
 [env.production]
 name = "carbon-emissions-counter-prod"
