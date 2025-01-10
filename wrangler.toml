@@ -2,12 +2,11 @@ name = "carbon-emissions-counter"
 compatibility_date = "2024-01-10"
 
 [site]
-bucket = "./static"
+bucket = "./templates"
 
 [build]
-command = "cp -r templates/* static/"
+command = ""
 
-# Custom domain configuration
 [env.production]
 routes = [
   { pattern = "carbonemissionscounter.com", custom_domain = true },
@@ -23,7 +22,8 @@ pattern = "/*"
 destination = "/index.html"
 status = 200
 
-# Force HTTPS
-[[headers]]
-pattern = "/*"
-headers = { Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload" }
+# Static asset handling
+[[rules]]
+type = "static"
+pattern = "/static/*"
+fallthrough = false
