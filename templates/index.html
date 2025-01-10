@@ -109,15 +109,50 @@
                                     </svg>
                                 </button>
                                 <div class="info-tooltip yearly-tooltip">
-                                    The counter represents a continuous real-time measurement of global carbon dioxide release, highlighting the urgent need for comprehensive climate action and sustainable practices to mitigate environmental impact.
+                                    This counter shows the total CO₂ emissions for the current year. It provides a comprehensive view of global carbon emissions on an annual basis, helping to track our progress in reducing greenhouse gas emissions over time.
                                 </div>
                             </h2>
                         </div>
                         <div class="counter">
                             <span id="yearlyEmissions">0</span>
                         </div>
-                        <p class="subtitle">Metric Tons of CO<sub>2</sub> in 2025</p>
-                        <p class="time-info">Since January 1st, 2025</p>
+                        <p class="subtitle">Metric Tons of CO<sub>2</sub> in <span id="currentYear">2024</span></p>
+                        <p class="time-reference">Since January 1st, <span id="yearReference">2024</span></p>
+                    </div>
+                </div>
+
+                <div class="counter-box carbon-budget-counter" data-aos="fade-up" data-aos-duration="400" data-aos-delay="300">
+                    <div class="counter-header">
+                        <h2>Remaining Carbon Budget (1.5°C Target)
+                            <button class="info-button budget-info" aria-label="Carbon budget information">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 16V12M12 8H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                            </button>
+                            <div class="info-tooltip budget-tooltip">
+                                <p>This counter shows the remaining carbon budget to limit global warming to 1.5°C above pre-industrial levels with a 50% probability. Based on the 2024 Global Carbon Budget report.</p>
+                                <p>At current emission rates, this budget will be exhausted by 2029.</p>
+                            </div>
+                        </h2>
+                    </div>
+                    <div class="counter">
+                        <span id="carbon-budget-counter">200.00</span>
+                        <span class="unit">Gt CO₂</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div id="carbon-budget-progress" class="progress" style="width: 0%"></div>
+                        </div>
+                        <div class="progress-labels">
+                            <span>2024 (200 Gt)</span>
+                            <span id="budget-percentage">0% used</span>
+                            <span>2029 (0 Gt)</span>
+                        </div>
+                    </div>
+                    <div class="additional-info">
+                        <p>Time until budget depletion: <span id="budget-years-remaining">5</span> years</p>
+                        <p>Current depletion rate: <span>41.6</span> Gt CO₂/year</p>
                     </div>
                 </div>
             </div>

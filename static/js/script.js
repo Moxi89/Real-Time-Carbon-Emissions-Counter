@@ -1,7 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Constants for emissions counter
+    const FPS = 60;
+    const FRAME_INTERVAL = 1000 / FPS; // 16.67ms for 60fps
+    const EMISSIONS_PER_YEAR = 41.6; // Gt CO₂ per year
+    const CARBON_BUDGET_START = 200; // Gt CO₂ in 2024
     const EMISSIONS_PER_SECOND = 1100; // tons of CO₂
-    const UPDATE_INTERVAL = 10; // milliseconds
+    const UPDATE_INTERVAL = 50; // milliseconds
     const pageLoadTime = new Date(); // When the page was loaded
     const startOfYear = new Date(2025, 0, 1); // January 1st, 2025
 
@@ -57,45 +61,62 @@ document.addEventListener('DOMContentLoaded', function() {
     const countryInfoElement = document.getElementById('countryInfo');
     const countrySelect = document.getElementById('countrySelect');
 
+    let lastFrameTime = 0;
+    let startTime;
+    let accumulatedTime = 0;
+
     function formatNumber(num) {
+        // Round to the nearest integer
+        num = Math.round(num);
+        
         if (num >= 1000000) {
-            // For numbers >= 1 million, show 2 decimal places
-            return num.toLocaleString('en-US', {
-                maximumFractionDigits: 2,
-                minimumFractionDigits: 2
-            });
-        } else if (num >= 1000) {
-            // For numbers >= 1000 but < 1 million, show 1 decimal place
-            return num.toLocaleString('en-US', {
-                maximumFractionDigits: 1,
-                minimumFractionDigits: 1
-            });
+            // For numbers >= 1 million, format with commas
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         } else {
-            // For smaller numbers, show no decimal places
-            return Math.round(num).toLocaleString('en-US');
+            // For smaller numbers, just return the integer
+            return num.toString();
         }
     }
 
+    function formatNumberWithAnimation(element, value) {
+        const currentValue = parseFloat(element.textContent.replace(/,/g, '')) || 0;
+        const diff = value - currentValue;
+        const step = diff / (FPS / 4); // Smooth transition over 1/4 second
+        
+        element.textContent = formatNumber(currentValue + step);
+    }
+
+    // Special formatting for carbon budget (keeping one decimal place)
+    function formatBudgetNumber(num) {
+        return Math.round(num * 10) / 10;
+    }
+
     function updateEmissions() {
-        const currentTime = new Date();
+        const currentTime = performance.now();
+        const elapsedSeconds = (currentTime - startTime) / 1000;
+        const totalEmissions = EMISSIONS_PER_SECOND * elapsedSeconds;
         
-        // Calculate total emissions since January 1st, 2025
-        const totalSecondsElapsed = (currentTime - startOfYear) / 1000;
-        const totalEmissions = EMISSIONS_PER_SECOND * totalSecondsElapsed;
-        yearlyEmissionsElement.textContent = formatNumber(totalEmissions);
+        // Update total emissions since page load
+        formatNumberWithAnimation(totalEmissionsElement, totalEmissions);
         
-        // Calculate emissions since page load
-        const pageLoadSecondsElapsed = (currentTime - pageLoadTime) / 1000;
-        const currentEmissions = EMISSIONS_PER_SECOND * pageLoadSecondsElapsed;
-        totalEmissionsElement.textContent = formatNumber(currentEmissions);
+        // Calculate and update yearly emissions
+        const yearStart = new Date(2025, 0, 1);
+        const yearlyElapsedSeconds = (Date.now() - yearStart) / 1000;
+        const yearlyEmissions = EMISSIONS_PER_SECOND * yearlyElapsedSeconds;
+        formatNumberWithAnimation(yearlyEmissionsElement, yearlyEmissions);
         
-        // Update country-specific emissions based on page load time
+        // Update country emissions
         const selectedCountry = countrySelect.value;
         const countryData = countryEmissionsData[selectedCountry];
-        const countryEmissions = (currentEmissions * countryData.percentage) / 100;
-        countryEmissionsElement.textContent = formatNumber(countryEmissions);
+        const countryEmissions = (totalEmissions * countryData.percentage) / 100;
         
-        // Update time ago since page load
+        formatNumberWithAnimation(countryEmissionsElement, countryEmissions);
+        countryInfoElement.textContent = `${countryData.percentage}% of global emissions`;
+    }
+
+    function updateTimeAgo() {
+        const currentTime = new Date();
+        const pageLoadSecondsElapsed = (currentTime - pageLoadTime) / 1000;
         const seconds = Math.floor(pageLoadSecondsElapsed);
         const text = seconds === 1 ? 'second' : 'seconds';
         timeAgoElement.textContent = `${seconds} ${text} ago`;
@@ -103,35 +124,65 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Carbon Budget Counter Logic
     function updateCarbonBudgetCounter() {
+        const now = performance.now();
         const startDate = new Date('2024-01-01').getTime();
         const endDate = new Date('2029-01-01').getTime();
-        const totalBudget = 200; // Gt CO₂
-        const annualEmissions = 41.6; // Gt CO₂ per year
-        
-        const now = new Date().getTime();
-        const elapsedTime = now - startDate;
+        const elapsedTime = Date.now() - startDate;
         const totalTimespan = endDate - startDate;
         const elapsedPercentage = (elapsedTime / totalTimespan) * 100;
         
-        // Calculate remaining budget
-        const emissionsPerMillisecond = annualEmissions / (365 * 24 * 60 * 60 * 1000);
-        const emittedSoFar = elapsedTime * emissionsPerMillisecond;
-        const remainingBudget = Math.max(0, totalBudget - emittedSoFar);
+        // Calculate remaining budget with high precision
+        const emissionsPerMs = EMISSIONS_PER_YEAR / (365 * 24 * 60 * 60 * 1000);
+        const emittedSoFar = elapsedTime * emissionsPerMs;
+        const remainingBudget = Math.max(0, CARBON_BUDGET_START - emittedSoFar);
         
-        // Calculate years remaining
-        const yearsRemaining = remainingBudget / annualEmissions;
+        // Calculate percentage used
+        const percentageUsed = ((CARBON_BUDGET_START - remainingBudget) / CARBON_BUDGET_START) * 100;
         
-        // Update the counter and progress bar
-        document.getElementById('carbon-budget-counter').textContent = remainingBudget.toFixed(2);
-        document.getElementById('carbon-budget-progress').style.width = `${elapsedPercentage}%`;
-        document.getElementById('budget-years-remaining').textContent = Math.max(0, yearsRemaining.toFixed(1));
+        // Update budget display
+        const budgetElement = document.getElementById('carbon-budget-counter');
+        budgetElement.textContent = formatBudgetNumber(remainingBudget);
+        
+        // Update progress bar and percentage
+        const progressBar = document.getElementById('carbon-budget-progress');
+        progressBar.style.width = `${percentageUsed}%`;
+        document.getElementById('budget-percentage').textContent = `${Math.round(percentageUsed)}% used`;
+        
+        // Update years remaining
+        const yearsRemaining = remainingBudget / EMISSIONS_PER_YEAR;
+        document.getElementById('budget-years-remaining').textContent = Math.max(0, Math.round(yearsRemaining * 10) / 10);
     }
 
-    // Update emissions counter every 10ms for smooth animation
-    setInterval(() => {
-        updateEmissions();
-        updateCarbonBudgetCounter();
-    }, 100);
+    // Update all counters with precise timing
+    function updateCounters(currentTime) {
+        if (!lastFrameTime) lastFrameTime = currentTime;
+        
+        const deltaTime = currentTime - lastFrameTime;
+        accumulatedTime += deltaTime;
+        
+        // Update at fixed time steps for smooth animation
+        while (accumulatedTime >= FRAME_INTERVAL) {
+            updateEmissions();
+            updateTimeAgo();
+            updateCarbonBudgetCounter();
+            accumulatedTime -= FRAME_INTERVAL;
+        }
+        
+        lastFrameTime = currentTime;
+        requestAnimationFrame(updateCounters);
+    }
+
+    // Initialize everything when the page loads
+    startTime = performance.now();
+    lastFrameTime = startTime;
+    
+    // Initial update
+    updateEmissions();
+    updateTimeAgo();
+    updateCarbonBudgetCounter();
+    
+    // Start the animation loop
+    requestAnimationFrame(updateCounters);
 
     // Handle country selection change
     countrySelect.addEventListener('change', function() {

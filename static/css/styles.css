@@ -185,9 +185,9 @@ body {
 
 .counters-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
-    margin: 2rem 0;
+    margin-bottom: 2rem;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -200,11 +200,12 @@ body {
     text-align: center;
     backdrop-filter: blur(10px);
     position: relative;
+    margin-bottom: 2rem;
 }
 
 .yearly-counter-container {
     max-width: 1200px;
-    margin: 3rem auto 0;
+    margin: 3rem auto 2rem;
     padding: 0 1rem;
 }
 
@@ -540,8 +541,8 @@ body {
 
 /* Progress bar styles */
 .progress-container {
-    margin-top: 1rem;
-    padding: 0 1rem;
+    margin-top: 1.5rem;
+    padding: 0 1.5rem;
 }
 
 .progress-bar {
@@ -565,11 +566,23 @@ body {
     justify-content: space-between;
     font-size: 0.85rem;
     color: var(--secondary-text);
+    margin-top: 0.5rem;
+}
+
+#budget-percentage {
+    color: var(--accent-color);
+    font-weight: 500;
+    text-align: center;
+    min-width: 80px;
+}
+
+.progress.critical {
+    background: #ff4444;
 }
 
 .additional-info {
-    margin-top: 1rem;
-    padding: 1rem;
+    margin-top: 1.5rem;
+    padding: 1.5rem;
     background: rgba(255, 255, 255, 0.05);
     border-radius: 8px;
 }
