@@ -1,0 +1,8 @@
+{
+  "name": "carbon-emissions-counter",
+  "version": "1.0.0",
+  "description": "Real-time carbon emissions counter",
+  "scripts": {
+    "build": "cp -r * dist/ && rm -rf dist/dist"
+  }
+}
