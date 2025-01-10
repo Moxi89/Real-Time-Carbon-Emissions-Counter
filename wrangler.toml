@@ -7,6 +7,13 @@ bucket = "./static"
 [build]
 command = "cp -r templates/* static/"
 
+# Custom domain configuration
+[env.production]
+routes = [
+  { pattern = "carbonemissionscounter.com", custom_domain = true },
+  { pattern = "www.carbonemissionscounter.com", custom_domain = true }
+]
+
 [[redirects]]
 pattern = "/"
 destination = "/index.html"
@@ -15,3 +22,8 @@ destination = "/index.html"
 pattern = "/*"
 destination = "/index.html"
 status = 200
+
+# Force HTTPS
+[[headers]]
+pattern = "/*"
+headers = { Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload" }
