@@ -9,35 +9,36 @@ echo "Starting build process..."
 rm -rf static
 mkdir -p static
 
+echo "Creating directory structure..."
+mkdir -p static/css
+mkdir -p static/js
+
 echo "Copying static assets..."
-# Copy all static assets
-cp -r static/* static/ 2>/dev/null || true
+# Copy CSS files
+cp -r static/css/* static/css/ 2>/dev/null || true
+cp -r css/* static/css/ 2>/dev/null || true
+
+# Copy JS files
+cp -r static/js/* static/js/ 2>/dev/null || true
+cp -r js/* static/js/ 2>/dev/null || true
 
 echo "Copying templates..."
 # Copy templates to static
 cp -r templates/* static/
 
-echo "Copying CSS and JS..."
-# Copy CSS and JS directories if they exist
-if [ -d "css" ]; then
-  cp -r css static/
-fi
-
-if [ -d "js" ]; then
-  cp -r js static/
-fi
-
-echo "Ensuring proper file structure..."
-# Ensure index.html exists in static
-if [ ! -f "static/index.html" ]; then
-  if [ -f "templates/index.html" ]; then
+# Ensure index.html exists in static root
+if [ -f "templates/index.html" ]; then
     cp templates/index.html static/
-  fi
 fi
 
 # Create _redirects if it doesn't exist
 if [ ! -f "static/_redirects" ]; then
-  echo "/* /index.html 200" > static/_redirects
+    echo "/* /index.html 200" > static/_redirects
+fi
+
+# Copy favicon if it exists
+if [ -f "static/favicon.png" ]; then
+    cp static/favicon.png static/
 fi
 
 echo "Build completed successfully!"
