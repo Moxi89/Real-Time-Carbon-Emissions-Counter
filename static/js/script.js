@@ -101,8 +101,37 @@ document.addEventListener('DOMContentLoaded', function() {
         timeAgoElement.textContent = `${seconds} ${text} ago`;
     }
 
+    // Carbon Budget Counter Logic
+    function updateCarbonBudgetCounter() {
+        const startDate = new Date('2024-01-01').getTime();
+        const endDate = new Date('2029-01-01').getTime();
+        const totalBudget = 200; // Gt CO₂
+        const annualEmissions = 41.6; // Gt CO₂ per year
+        
+        const now = new Date().getTime();
+        const elapsedTime = now - startDate;
+        const totalTimespan = endDate - startDate;
+        const elapsedPercentage = (elapsedTime / totalTimespan) * 100;
+        
+        // Calculate remaining budget
+        const emissionsPerMillisecond = annualEmissions / (365 * 24 * 60 * 60 * 1000);
+        const emittedSoFar = elapsedTime * emissionsPerMillisecond;
+        const remainingBudget = Math.max(0, totalBudget - emittedSoFar);
+        
+        // Calculate years remaining
+        const yearsRemaining = remainingBudget / annualEmissions;
+        
+        // Update the counter and progress bar
+        document.getElementById('carbon-budget-counter').textContent = remainingBudget.toFixed(2);
+        document.getElementById('carbon-budget-progress').style.width = `${elapsedPercentage}%`;
+        document.getElementById('budget-years-remaining').textContent = Math.max(0, yearsRemaining.toFixed(1));
+    }
+
     // Update emissions counter every 10ms for smooth animation
-    setInterval(updateEmissions, UPDATE_INTERVAL);
+    setInterval(() => {
+        updateEmissions();
+        updateCarbonBudgetCounter();
+    }, 100);
 
     // Handle country selection change
     countrySelect.addEventListener('change', function() {
