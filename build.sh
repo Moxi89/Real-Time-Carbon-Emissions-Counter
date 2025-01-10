@@ -1,11 +1,9 @@
 #!/bin/bash
-
-# Exit on error
 set -e
 
 echo "Starting build process..."
 
-# Clean up old build
+# Create dist directory
 rm -rf dist
 mkdir -p dist
 
@@ -13,20 +11,16 @@ echo "Creating directory structure..."
 mkdir -p dist/css
 mkdir -p dist/js
 
-echo "Copying static assets..."
+echo "Copying files..."
+# Copy main files
+cp index.html dist/
+cp _headers dist/
+cp _routes.json dist/
+
 # Copy CSS files
-cp -r css/* dist/css/ 2>/dev/null || true
+cp css/styles.css dist/css/
 
 # Copy JS files
-cp -r js/* dist/js/ 2>/dev/null || true
-
-echo "Copying index.html..."
-cp index.html dist/
-
-echo "Copying _headers..."
-cp _headers dist/
-
-echo "Copying _routes.json..."
-cp _routes.json dist/
+cp js/script.js dist/js/
 
 echo "Build completed successfully!"

@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Real-time carbon emissions counter",
   "scripts": {
-    "build": "mkdir -p dist && cp -r index.html css js _headers _routes.json dist/"
+    "build": "mkdir -p dist && cp -r index.html _headers _routes.json dist/ && mkdir -p dist/css dist/js && cp css/styles.css dist/css/ && cp js/script.js dist/js/",
+    "prebuild": "chmod +x build.sh"
   },
   "dependencies": {},
   "engines": {
