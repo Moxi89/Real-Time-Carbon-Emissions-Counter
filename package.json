@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Real-time carbon emissions counter",
   "scripts": {
-    "build": "cp -r * dist/ && rm -rf dist/dist"
+    "build": "mkdir -p dist && cp -r index.html css js _headers _routes.json dist/"
+  },
+  "dependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
