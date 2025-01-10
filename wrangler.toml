@@ -13,6 +13,34 @@ routes = [
   { pattern = "www.carbonemissionscounter.com", custom_domain = true }
 ]
 
+# MIME type configurations
+[[headers]]
+for = "/*.css"
+[headers.values]
+Content-Type = "text/css"
+
+[[headers]]
+for = "/*.js"
+[headers.values]
+Content-Type = "text/javascript"
+
+[[headers]]
+for = "/static/css/*"
+[headers.values]
+Content-Type = "text/css"
+
+[[headers]]
+for = "/static/js/*"
+[headers.values]
+Content-Type = "text/javascript"
+
+[[headers]]
+for = "/*"
+[headers.values]
+X-Content-Type-Options = "nosniff"
+X-Frame-Options = "DENY"
+X-XSS-Protection = "1; mode=block"
+
 [[redirects]]
 pattern = "/"
 destination = "/index.html"

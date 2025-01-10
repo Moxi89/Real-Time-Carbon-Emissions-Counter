@@ -1,0 +1,17 @@
+/*
+  Content-Type: text/html; charset=utf-8
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  X-XSS-Protection: 1; mode=block
+
+/*.css
+  Content-Type: text/css
+
+/*.js
+  Content-Type: text/javascript
+
+/static/css/*
+  Content-Type: text/css
+
+/static/js/*
+  Content-Type: text/javascript
