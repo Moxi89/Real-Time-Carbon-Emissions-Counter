@@ -2,7 +2,7 @@ name = "carbon-emissions-counter"
 compatibility_date = "2024-01-10"
 
 [site]
-bucket = "./templates"
+bucket = "."
 
 [build]
 command = ""
@@ -13,24 +13,13 @@ routes = [
   { pattern = "www.carbonemissionscounter.com", custom_domain = true }
 ]
 
-# MIME type configurations
 [[headers]]
-for = "/*.css"
+for = "/css/*"
 [headers.values]
 Content-Type = "text/css"
 
 [[headers]]
-for = "/*.js"
-[headers.values]
-Content-Type = "text/javascript"
-
-[[headers]]
-for = "/static/css/*"
-[headers.values]
-Content-Type = "text/css"
-
-[[headers]]
-for = "/static/js/*"
+for = "/js/*"
 [headers.values]
 Content-Type = "text/javascript"
 
@@ -40,18 +29,4 @@ for = "/*"
 X-Content-Type-Options = "nosniff"
 X-Frame-Options = "DENY"
 X-XSS-Protection = "1; mode=block"
-
-[[redirects]]
-pattern = "/"
-destination = "/index.html"
-
-[[redirects]]
-pattern = "/*"
-destination = "/index.html"
-status = 200
-
-# Static asset handling
-[[rules]]
-type = "static"
-pattern = "/static/*"
-fallthrough = false
+Content-Security-Policy = "default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; img-src 'self' https: data:;"
