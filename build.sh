@@ -10,6 +10,7 @@ mkdir -p dist
 echo "Creating directory structure..."
 mkdir -p dist/css
 mkdir -p dist/js
+mkdir -p dist/static
 
 echo "Copying files..."
 # Copy main files
@@ -17,10 +18,16 @@ cp index.html dist/
 cp _headers dist/
 cp _routes.json dist/
 
+# Copy static assets
+cp -r static/* dist/static/
+
 # Copy CSS files
-cp css/styles.css dist/css/
+cp -r css/* dist/css/
 
 # Copy JS files
-cp js/script.js dist/js/
+cp -r js/* dist/js/
+
+# Ensure proper permissions
+chmod -R 755 dist
 
 echo "Build completed successfully!"
