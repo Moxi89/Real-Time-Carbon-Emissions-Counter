@@ -133,9 +133,10 @@
                             </h2>
                         </div>
                         <div class="counter">
-                            <span>0.00000000</span>
-                            <span class="unit">Gt CO₂</span>
+                            <span id="yearlyEmissions">0</span>
                         </div>
+                        <p class="subtitle">Metric Tons of CO<sub>2</sub> in <span id="currentYear">2024</span></p>
+                        <p class="time-reference">Since January 1st, <span id="yearReference">2024</span></p>
                     </div>
                 </div>
 
@@ -488,8 +489,11 @@
                     <h3>Data Sources</h3>
                     <p>Our data is sourced from reputable organizations including the IPCC, IEA, and Global Carbon Project.</p>
                 </div>
+                <div class="footer-links">
+                    <a href="/static/disclaimer.html">Disclaimer</a>
+                </div>
                 <div class="footer-section">
-                    <p class="copyright">&copy; 2025 CO₂ Emissions Counter | <a href="/disclaimer" class="footer-link">Disclaimer</a></p>
+                    <p class="copyright">&copy; 2025 CO₂ Emissions Counter</p>
                 </div>
             </div>
         </footer>
