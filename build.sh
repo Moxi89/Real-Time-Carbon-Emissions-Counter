@@ -14,7 +14,13 @@ echo "Copying files..."
 cp index.html dist/ || exit 1
 cp _headers dist/ || exit 1
 cp _routes.json dist/ || exit 1
-cp static/favicon.png dist/ || exit 1
+
+# Copy favicon if it exists
+if [ -f "static/favicon.png" ]; then
+    cp static/favicon.png dist/
+else
+    echo "Note: favicon.png not found, skipping..."
+fi
 
 # Copy CSS and JS with error checking
 cp -r css/* dist/css/ || exit 1

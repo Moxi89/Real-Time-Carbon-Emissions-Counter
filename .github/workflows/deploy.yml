@@ -34,7 +34,11 @@ jobs:
         cp index.html dist/
         cp _headers dist/
         cp _routes.json dist/
-        cp static/favicon.png dist/
+        if [ -f "static/favicon.png" ]; then
+          cp static/favicon.png dist/
+        else
+          echo "Note: favicon.png not found, skipping..."
+        fi
         cp -r css/* dist/css/
         cp -r js/* dist/js/
     
