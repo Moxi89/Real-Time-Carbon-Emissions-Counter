@@ -11,46 +11,17 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v2
     
     - name: Setup Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v2
       with:
         node-version: '18'
-        cache: 'npm'
     
-    - name: Install dependencies
+    - name: Build site
       run: |
-        npm install
-    
-    - name: Create build directories
-      run: |
-        mkdir -p dist
-        mkdir -p dist/css
-        mkdir -p dist/js
-    
-    - name: Copy files
-      run: |
-        cp index.html dist/
-        cp _headers dist/
-        cp _routes.json dist/
-        if [ -f "static/favicon.png" ]; then
-          cp static/favicon.png dist/
-        else
-          echo "Note: favicon.png not found, skipping..."
-        fi
-        cp -r css/* dist/css/
-        cp -r js/* dist/js/
-    
-    - name: Set permissions
-      run: |
-        chmod -R 755 dist
-    
-    - name: List build output
-      run: |
-        ls -la dist
-        ls -la dist/css
-        ls -la dist/js
+        chmod +x build.sh
+        ./build.sh
     
     # The actual deployment will be handled by Netlify and Cloudflare's GitHub integrations
     # This just ensures the build process works

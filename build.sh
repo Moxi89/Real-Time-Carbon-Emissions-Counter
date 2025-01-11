@@ -3,36 +3,31 @@ set -e
 
 echo "Starting build process..."
 
-# Clean and create dist directory
+# Create dist directory
 rm -rf dist
 mkdir -p dist
+
+echo "Creating directory structure..."
 mkdir -p dist/css
 mkdir -p dist/js
+mkdir -p dist/static
 
 echo "Copying files..."
 # Copy main files
-cp index.html dist/ || exit 1
-cp _headers dist/ || exit 1
-cp _routes.json dist/ || exit 1
+cp index.html dist/
+cp _headers dist/
+cp _routes.json dist/
 
-# Copy favicon if it exists
-if [ -f "static/favicon.png" ]; then
-    cp static/favicon.png dist/
-else
-    echo "Note: favicon.png not found, skipping..."
-fi
+# Copy static assets
+cp -r static/* dist/static/
 
-# Copy CSS and JS with error checking
-cp -r css/* dist/css/ || exit 1
-cp -r js/* dist/js/ || exit 1
+# Copy CSS files
+cp -r css/* dist/css/
+
+# Copy JS files
+cp -r js/* dist/js/
 
 # Ensure proper permissions
-chmod -R 755 dist || exit 1
-
-# List contents for verification
-echo "Build output:"
-ls -la dist
-ls -la dist/css
-ls -la dist/js
+chmod -R 755 dist
 
 echo "Build completed successfully!"

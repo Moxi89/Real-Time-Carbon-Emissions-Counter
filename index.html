@@ -23,8 +23,8 @@
     <link rel="canonical" href="https://www.carbonemissionscounter.com/">
     
     <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌳</text></svg>">
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -489,23 +489,21 @@
                     <h3>Data Sources</h3>
                     <p>Our data is sourced from reputable organizations including the IPCC, IEA, and Global Carbon Project.</p>
                 </div>
-                <div class="footer-links">
-                    <a href="/static/disclaimer.html">Disclaimer</a>
-                </div>
                 <div class="footer-section">
-                    <p class="copyright">&copy; 2025 CO₂ Emissions Counter</p>
+                    <p class="copyright">&copy; 2025 CO₂ Emissions Counter | <a href="/disclaimer" class="footer-link">Disclaimer</a></p>
                 </div>
             </div>
         </footer>
     </div>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script src="/js/main.js"></script>
     <script>
         AOS.init({
             duration: 800,
             easing: 'ease-in-out',
-            once: true
+            once: true,
+            delay: 0
         });
     </script>
+    <script src="/static/js/script.js" defer></script>
 </body>
 </html>
