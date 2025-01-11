@@ -26,70 +26,102 @@ function updateCounters() {
     const yearsSinceStart = elapsedSeconds / (365 * 24 * 60 * 60);
     carbonBudgetCounter = CARBON_BUDGET_2020 - (yearsSinceStart * YEARLY_REDUCTION_RATE);
 
-    // Update display
-    document.getElementById('yearly-counter').textContent = yearlyCounter.toFixed(8);
-    document.getElementById('carbon-budget').textContent = carbonBudgetCounter.toFixed(8);
+    // Update yearly counter
+    const yearlyCounterElement = document.querySelector('.yearly-counter .counter span');
+    if (yearlyCounterElement) {
+        yearlyCounterElement.textContent = yearlyCounter.toFixed(8);
+    }
+
+    // Update carbon budget counter
+    const carbonBudgetElement = document.getElementById('carbon-budget-counter');
+    if (carbonBudgetElement) {
+        carbonBudgetElement.textContent = carbonBudgetCounter.toFixed(2);
+    }
+
+    // Update budget progress
+    const totalBudget = 200; // Starting budget in 2024
+    const usedPercentage = ((totalBudget - carbonBudgetCounter) / totalBudget) * 100;
+    
+    const progressBar = document.getElementById('carbon-budget-progress');
+    const percentageLabel = document.getElementById('budget-percentage');
+    if (progressBar && percentageLabel) {
+        progressBar.style.width = `${usedPercentage}%`;
+        percentageLabel.textContent = `${usedPercentage.toFixed(1)}% used`;
+    }
+
+    // Update years remaining
+    const yearsRemaining = document.getElementById('budget-years-remaining');
+    if (yearsRemaining) {
+        const remainingYears = (carbonBudgetCounter / YEARLY_EMISSIONS).toFixed(1);
+        yearsRemaining.textContent = remainingYears;
+    }
 }
 
 // Initialize charts
 function initializeCharts() {
     // Country Emissions Chart
-    const countryCtx = document.querySelector('#countryChart canvas').getContext('2d');
-    new Chart(countryCtx, {
-        type: 'bar',
-        data: {
-            labels: ['China', 'USA', 'India', 'Russia', 'Japan'],
-            datasets: [{
-                label: 'CO₂ Emissions (Billion Tonnes)',
-                data: [10.5, 5.1, 2.7, 1.7, 1.1],
-                backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Billion Tonnes CO₂'
+    const countryChartElement = document.querySelector('#countryChart canvas');
+    if (countryChartElement) {
+        const countryCtx = countryChartElement.getContext('2d');
+        new Chart(countryCtx, {
+            type: 'bar',
+            data: {
+                labels: ['China', 'USA', 'India', 'Russia', 'Japan'],
+                datasets: [{
+                    label: 'CO₂ Emissions (Billion Tonnes)',
+                    data: [10.5, 5.1, 2.7, 1.7, 1.1],
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Billion Tonnes CO₂'
+                        }
                     }
                 }
             }
-        }
-    });
+        });
+    }
 
     // Product Emissions Chart
-    const productCtx = document.querySelector('#productChart canvas').getContext('2d');
-    new Chart(productCtx, {
-        type: 'bar',
-        data: {
-            labels: ['Electricity', 'Transport', 'Industry', 'Buildings', 'Agriculture'],
-            datasets: [{
-                label: 'CO₂ Emissions by Sector',
-                data: [13.6, 8.7, 6.9, 3.3, 4.3],
-                backgroundColor: 'rgba(255, 159, 64, 0.6)',
-                borderColor: 'rgba(255, 159, 64, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Billion Tonnes CO₂'
+    const productChartElement = document.querySelector('#productChart canvas');
+    if (productChartElement) {
+        const productCtx = productChartElement.getContext('2d');
+        new Chart(productCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Electricity', 'Transport', 'Industry', 'Buildings', 'Agriculture'],
+                datasets: [{
+                    label: 'CO₂ Emissions by Sector',
+                    data: [13.6, 8.7, 6.9, 3.3, 4.3],
+                    backgroundColor: 'rgba(255, 159, 64, 0.6)',
+                    borderColor: 'rgba(255, 159, 64, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Billion Tonnes CO₂'
+                        }
                     }
                 }
             }
-        }
-    });
+        });
+    }
 }
 
 // FAQ Functionality
@@ -117,19 +149,36 @@ function initializeFAQ() {
 
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    // Start counters
-    setInterval(updateCounters, 100); // Update every 100ms for smooth animation
-    
-    // Initialize charts
-    initializeCharts();
-    
-    // Initialize FAQ
-    initializeFAQ();
-    
-    // Initialize AOS
-    AOS.init({
-        duration: 800,
-        easing: 'ease-in-out',
-        once: true
-    });
+    // Add error handling for initialization
+    try {
+        // Start counters
+        setInterval(updateCounters, 100); // Update every 100ms for smooth animation
+        
+        // Initialize charts with error handling
+        try {
+            initializeCharts();
+        } catch (e) {
+            console.error('Error initializing charts:', e);
+        }
+        
+        // Initialize FAQ with error handling
+        try {
+            initializeFAQ();
+        } catch (e) {
+            console.error('Error initializing FAQ:', e);
+        }
+        
+        // Initialize AOS with error handling
+        try {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true
+            });
+        } catch (e) {
+            console.error('Error initializing AOS:', e);
+        }
+    } catch (e) {
+        console.error('Error during initialization:', e);
+    }
 });
