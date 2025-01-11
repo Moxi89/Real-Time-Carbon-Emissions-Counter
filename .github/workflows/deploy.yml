@@ -22,9 +22,7 @@ jobs:
       run: npm install
     
     - name: Build site
-      run: |
-        chmod +x build.sh
-        ./build.sh
+      run: npm run build
     
     # The actual deployment will be handled by Netlify and Cloudflare's GitHub integrations
     # This just ensures the build process works
