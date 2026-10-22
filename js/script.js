@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const currentYear = pageLoadTime.getFullYear();
     const startOfYear = new Date(currentYear, 0, 1); // January 1st of the current year
 
+    const perSecondElement = document.getElementById('emissionsPerSecond');
+    if (perSecondElement) perSecondElement.textContent = Math.round(EMISSIONS_PER_SECOND).toLocaleString('en-US');
+
     // Show the current year wherever the page refers to it
     ['currentYear', 'yearReference', 'copyrightYear'].forEach(id => {
         const el = document.getElementById(id);
@@ -68,17 +71,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let startTime;
 
+    // Whole number with thousands separators, e.g. 3,284
     function formatNumber(num) {
-        // Round to the nearest integer
-        num = Math.round(num);
-        
-        if (num >= 1000000) {
-            // For numbers >= 1 million, format with commas
-            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        } else {
-            // For smaller numbers, just return the integer
-            return num.toString();
-        }
+        return Math.round(num).toLocaleString('en-US');
     }
 
     // Counters update every frame, so show the true value directly
@@ -334,21 +329,33 @@ document.addEventListener('DOMContentLoaded', function() {
         new Chart(charts[2], { ...chartConfig, data: cityData });
     }
 
-    // Info button event listeners
-    document.querySelectorAll('.info-button').forEach(button => {
-        button.addEventListener('mouseenter', function() {
-            const tooltip = this.nextElementSibling;
-            if (tooltip && tooltip.classList.contains('info-tooltip')) {
-                tooltip.style.display = 'block';
-            }
-        });
+    // Info tooltips: hover shows them (CSS); tap, click or Enter toggles them
+    const infoButtons = document.querySelectorAll('.info-button');
 
-        button.addEventListener('mouseleave', function() {
-            const tooltip = this.nextElementSibling;
-            if (tooltip && tooltip.classList.contains('info-tooltip')) {
-                tooltip.style.display = 'none';
-            }
+    function closeTooltips(except) {
+        infoButtons.forEach(button => {
+            if (button === except) return;
+            button.setAttribute('aria-expanded', 'false');
+            const tooltip = button.nextElementSibling;
+            if (tooltip) tooltip.classList.remove('show');
         });
+    }
+
+    infoButtons.forEach(button => {
+        const tooltip = button.nextElementSibling;
+        if (!tooltip || !tooltip.classList.contains('info-tooltip')) return;
+        button.setAttribute('aria-expanded', 'false');
+        button.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeTooltips(button);
+            const open = tooltip.classList.toggle('show');
+            button.setAttribute('aria-expanded', String(open));
+        });
+    });
+
+    document.addEventListener('click', () => closeTooltips());
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeTooltips();
     });
 
     // Chart Navigation
@@ -429,32 +436,29 @@ document.addEventListener('DOMContentLoaded', function() {
     const menuItems = document.querySelector('.nav-items');
 
     if (menuBtn && menuItems) {
+        const setMenu = (open) => {
+            menuItems.classList.toggle('show', open);
+            menuBtn.classList.toggle('active', open);
+            menuBtn.setAttribute('aria-expanded', String(open));
+            menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        };
+
         menuBtn.addEventListener('click', (e) => {
             e.stopPropagation(); // Prevent click from bubbling to document
-            menuBtn.classList.toggle('active');
-            menuItems.classList.toggle('show');
+            setMenu(!menuItems.classList.contains('show'));
         });
 
         // Close menu when clicking a link
-        const menuLinks = menuItems.querySelectorAll('a');
-        menuLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                menuBtn.classList.remove('active');
-                menuItems.classList.remove('show');
-            });
+        menuItems.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => setMenu(false));
         });
 
-        // Close menu when clicking outside
+        // Close menu when clicking outside or pressing Escape
         document.addEventListener('click', (e) => {
-            if (!menuBtn.contains(e.target) && !menuItems.contains(e.target)) {
-                menuBtn.classList.remove('active');
-                menuItems.classList.remove('show');
-            }
+            if (!menuBtn.contains(e.target) && !menuItems.contains(e.target)) setMenu(false);
         });
-
-        // Prevent menu from closing when clicking inside it
-        menuItems.addEventListener('click', (e) => {
-            e.stopPropagation(); // Stop click from reaching the document
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') setMenu(false);
         });
     }
 

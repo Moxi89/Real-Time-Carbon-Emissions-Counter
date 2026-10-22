@@ -39,12 +39,12 @@
     </div>
     <div class="container">
         <nav class="nav-menu">
-            <button class="nav-toggle">
+            <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-items">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
-            <div class="nav-items">
+            <div class="nav-items" id="nav-items">
                 <a href="#counter-section">Real-Time Counter</a>
                 <a href="#chart-section">Emissions Charts</a>
                 <a href="#faq-section">FAQ</a>
@@ -97,7 +97,7 @@
                         <div class="counter">
                             <span id="countryEmissions">0</span>
                         </div>
-                        <p class="subtitle">Metric Tons of CO<sub>2</sub> since page load</p>
+                        <p class="subtitle">Metric Tons of CO<sub>2</sub> since you<br>opened this page</p>
                         <div class="country-selector">
                             <select id="countrySelect" class="country-dropdown">
                                 <option value="china">China</option>
@@ -178,7 +178,7 @@
             <div class="info-panels">
                 <div class="panel impact">
                     <h2>⚠️ Impact</h2>
-                    <p>Each second, approximately 1,100 metric tons of CO₂ are released into the atmosphere globally.</p>
+                    <p>Each second, approximately <span id="emissionsPerSecond">1,318</span> metric tons of CO₂ are released into the atmosphere globally.</p>
                 </div>
 
                 <div class="panel action">
