@@ -14,14 +14,15 @@ A real-time carbon emissions counter that tracks global CO₂ emissions. Visit t
 
 ```
 .
-├── css/              # Stylesheets
-├── js/              # JavaScript files
-├── _headers         # Cloudflare headers configuration
-├── _routes.json     # Cloudflare routing configuration
-├── build.sh         # Build script
-├── index.html       # Main HTML file
-├── package.json     # Project configuration
-└── wrangler.toml    # Cloudflare Pages configuration
+├── .github/workflows/deploy.yml  # CI build check
+├── css/                          # Stylesheets
+├── js/                           # JavaScript files
+├── _headers                      # Cloudflare Pages headers configuration
+├── build.sh                      # Build script (copies the site into dist/)
+├── disclaimer.html               # Disclaimer page
+├── favicon.svg                   # Site icon
+├── index.html                    # Main HTML file
+└── package.json                  # Project configuration
 ```
 
 ## Development
@@ -38,8 +39,8 @@ The site is automatically deployed to Cloudflare Pages when changes are pushed t
 Build settings:
 - Build command: `chmod +x build.sh && ./build.sh`
 - Build output directory: `dist`
-- Node.js version: 18.x
+- Node.js version: 20.x
 
 ## License
 
-MIT License - See LICENSE file for details
+MIT License

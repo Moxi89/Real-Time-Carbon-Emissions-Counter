@@ -1,13 +1,19 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Constants for emissions counter
     const FPS = 60;
-    const FRAME_INTERVAL = 1000 / FPS; // 16.67ms for 60fps
     const EMISSIONS_PER_YEAR = 41.6; // Gt CO₂ per year
     const CARBON_BUDGET_START = 200; // Gt CO₂ in 2024
-    const EMISSIONS_PER_SECOND = 1100; // tons of CO₂
-    const UPDATE_INTERVAL = 50; // milliseconds
+    const SECONDS_PER_YEAR = 365.25 * 24 * 60 * 60;
+    const EMISSIONS_PER_SECOND = (EMISSIONS_PER_YEAR * 1e9) / SECONDS_PER_YEAR; // tons of CO₂ (~1,318)
     const pageLoadTime = new Date(); // When the page was loaded
-    const startOfYear = new Date(2025, 0, 1); // January 1st, 2025
+    const currentYear = pageLoadTime.getFullYear();
+    const startOfYear = new Date(currentYear, 0, 1); // January 1st of the current year
+
+    // Show the current year wherever the page refers to it
+    ['currentYear', 'yearReference', 'copyrightYear'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = currentYear;
+    });
 
     // Country emissions data (percentage of global emissions)
     const countryEmissionsData = {
@@ -61,9 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const countryInfoElement = document.getElementById('countryInfo');
     const countrySelect = document.getElementById('countrySelect');
 
-    let lastFrameTime = 0;
     let startTime;
-    let accumulatedTime = 0;
 
     function formatNumber(num) {
         // Round to the nearest integer
@@ -100,8 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
         formatNumberWithAnimation(totalEmissionsElement, totalEmissions);
         
         // Calculate and update yearly emissions
-        const yearStart = new Date(2025, 0, 1);
-        const yearlyElapsedSeconds = (Date.now() - yearStart) / 1000;
+        const yearlyElapsedSeconds = (Date.now() - startOfYear) / 1000;
         const yearlyEmissions = EMISSIONS_PER_SECOND * yearlyElapsedSeconds;
         formatNumberWithAnimation(yearlyEmissionsElement, yearlyEmissions);
         
@@ -124,7 +127,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Carbon Budget Counter Logic
     function updateCarbonBudgetCounter() {
-        const now = performance.now();
         const startDate = new Date('2024-01-01').getTime();
         const endDate = new Date('2029-01-01').getTime();
         const elapsedTime = Date.now() - startDate;
@@ -153,28 +155,16 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('budget-years-remaining').textContent = Math.max(0, Math.round(yearsRemaining * 10) / 10);
     }
 
-    // Update all counters with precise timing
-    function updateCounters(currentTime) {
-        if (!lastFrameTime) lastFrameTime = currentTime;
-        
-        const deltaTime = currentTime - lastFrameTime;
-        accumulatedTime += deltaTime;
-        
-        // Update at fixed time steps for smooth animation
-        while (accumulatedTime >= FRAME_INTERVAL) {
-            updateEmissions();
-            updateTimeAgo();
-            updateCarbonBudgetCounter();
-            accumulatedTime -= FRAME_INTERVAL;
-        }
-        
-        lastFrameTime = currentTime;
+    // Update all counters once per animation frame
+    function updateCounters() {
+        updateEmissions();
+        updateTimeAgo();
+        updateCarbonBudgetCounter();
         requestAnimationFrame(updateCounters);
     }
 
     // Initialize everything when the page loads
     startTime = performance.now();
-    lastFrameTime = startTime;
     
     // Initial update
     updateEmissions();
@@ -291,50 +281,6 @@ document.addEventListener('DOMContentLoaded', function() {
             borderColor: 'rgba(74, 226, 144, 1)',
             borderWidth: 1
         }]
-    };
-
-    // Additional country information for tooltips
-    const countryInfo = {
-        'China': {
-            percentage: '32.88%',
-            sources: 'Coal, industrial production, large population'
-        },
-        'United States': {
-            percentage: '12.6%',
-            sources: 'Industrial activities, transportation, energy production'
-        },
-        'India': {
-            percentage: '6.99%',
-            sources: 'Rapid industrialization and growing energy demands'
-        },
-        'Russia': {
-            percentage: '4.96%',
-            sources: 'Significant fossil fuel production and industrial sectors'
-        },
-        'Japan': {
-            percentage: '2.81%',
-            sources: 'Industrial manufacturing and energy consumption'
-        },
-        'Indonesia': {
-            percentage: '1.8%',
-            sources: 'Deforestation and industrial activities'
-        },
-        'Iran': {
-            percentage: '1.78%',
-            sources: 'Fossil fuel-based economy'
-        },
-        'Germany': {
-            percentage: '1.75%',
-            sources: 'Industrial manufacturing and energy production'
-        },
-        'Saudi Arabia': {
-            percentage: '1.66%',
-            sources: 'Oil production and energy-intensive industries'
-        },
-        'South Korea': {
-            percentage: '1.53%',
-            sources: 'Industrial manufacturing and energy consumption'
-        }
     };
 
     // Chart Configuration
