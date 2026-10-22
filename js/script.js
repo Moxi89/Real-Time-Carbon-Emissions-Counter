@@ -2,11 +2,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Constants for emissions counter
     const FPS = 60;
     const FRAME_INTERVAL = 1000 / FPS; // 16.67ms for 60fps
-    const EMISSIONS_PER_YEAR = 41.6; // Gt CO₂ per year
-    const CARBON_BUDGET_START = 200; // Gt CO₂ remaining on the reference date below
-    const BUDGET_REFERENCE_DATE = Date.UTC(2024, 0, 1); // Global Carbon Budget 2024 reference point
+    const EMISSIONS_PER_YEAR = 42.2; // Gt CO₂ per year, fossil + land use (Global Carbon Budget 2025)
+    const CARBON_BUDGET_START = 170; // Gt CO₂ left for 1.5°C at 50% likelihood, on the reference date below
+    const BUDGET_REFERENCE_DATE = Date.UTC(2026, 0, 1); // Global Carbon Budget 2025 counts from 1 January 2026
     const MS_PER_YEAR = 365.25 * 24 * 60 * 60 * 1000;
-    // Date the budget runs out at the current emission rate (~late 2028)
+    // Date the budget runs out at the current emission rate (~early 2030)
     const BUDGET_DEPLETION_DATE = new Date(BUDGET_REFERENCE_DATE + (CARBON_BUDGET_START / EMISSIONS_PER_YEAR) * MS_PER_YEAR);
     const EMISSIONS_PER_SECOND = 1100; // tons of CO₂
     const UPDATE_INTERVAL = 50; // milliseconds
