@@ -148,8 +148,8 @@
                         <div class="counter">
                             <span id="yearlyEmissions">0</span>
                         </div>
-                        <p class="subtitle">Metric Tons of CO<sub>2</sub> in <span id="currentYear">2024</span></p>
-                        <p class="time-reference">Since January 1st, <span id="yearReference">2024</span></p>
+                        <p class="subtitle">Metric Tons of CO<sub>2</sub> in <span id="currentYear">2026</span></p>
+                        <p class="time-reference">Since January 1st, <span id="yearReference">2026</span></p>
                     </div>
                 </div>
 
@@ -164,7 +164,7 @@
                             </button>
                             <div role="tooltip" class="info-tooltip budget-tooltip">
                                 <p>This counter shows the remaining carbon budget to limit global warming to 1.5°C above pre-industrial levels with a 50% probability. Based on the 2024 Global Carbon Budget report.</p>
-                                <p>At current emission rates, this budget will be exhausted by 2029.</p>
+                                <p>At current emission rates, this budget will be exhausted by <span id="budget-depletion-year">2028</span>.</p>
                             </div>
                         </h2>
                     </div>
@@ -177,14 +177,14 @@
                             <div id="carbon-budget-progress" class="progress" style="width: 0%"></div>
                         </div>
                         <div class="progress-labels">
-                            <span>2024 (200 Gt)</span>
+                            <span id="budget-start-label">2024 (200 Gt)</span>
                             <span id="budget-percentage">0% used</span>
-                            <span>2029 (0 Gt)</span>
+                            <span id="budget-end-label">2028 (0 Gt)</span>
                         </div>
                     </div>
                     <div class="additional-info">
                         <p>Time until budget depletion: <span id="budget-years-remaining">5</span> years</p>
-                        <p>Current depletion rate: <span>41.6</span> Gt CO₂/year</p>
+                        <p>Current depletion rate: <span id="budget-rate">41.6</span> Gt CO₂/year</p>
                     </div>
                 </div>
             </div>
@@ -512,7 +512,7 @@
                     <p>Our data is sourced from reputable organizations including the IPCC, IEA, and Global Carbon Project.</p>
                 </div>
                 <div class="footer-section">
-                    <p class="copyright">&copy; 2025 CO₂ Emissions Counter | <a href="/disclaimer" class="footer-link">Disclaimer</a></p>
+                    <p class="copyright">&copy; <span id="copyright-year">2026</span> CO₂ Emissions Counter | <a href="/disclaimer" class="footer-link">Disclaimer</a></p>
                 </div>
             </div>
         </footer>

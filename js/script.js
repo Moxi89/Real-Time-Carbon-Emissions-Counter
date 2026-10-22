@@ -3,11 +3,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const FPS = 60;
     const FRAME_INTERVAL = 1000 / FPS; // 16.67ms for 60fps
     const EMISSIONS_PER_YEAR = 41.6; // Gt CO₂ per year
-    const CARBON_BUDGET_START = 200; // Gt CO₂ in 2024
+    const CARBON_BUDGET_START = 200; // Gt CO₂ remaining on the reference date below
+    const BUDGET_REFERENCE_DATE = Date.UTC(2024, 0, 1); // Global Carbon Budget 2024 reference point
+    const MS_PER_YEAR = 365.25 * 24 * 60 * 60 * 1000;
+    // Date the budget runs out at the current emission rate (~late 2028)
+    const BUDGET_DEPLETION_DATE = new Date(BUDGET_REFERENCE_DATE + (CARBON_BUDGET_START / EMISSIONS_PER_YEAR) * MS_PER_YEAR);
     const EMISSIONS_PER_SECOND = 1100; // tons of CO₂
     const UPDATE_INTERVAL = 50; // milliseconds
     const pageLoadTime = new Date(); // When the page was loaded
-    const startOfYear = new Date(2025, 0, 1); // January 1st, 2025
 
     // Country emissions data (percentage of global emissions)
     const countryEmissionsData = {
@@ -99,8 +102,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Update total emissions since page load
         formatNumberWithAnimation(totalEmissionsElement, totalEmissions);
         
-        // Calculate and update yearly emissions
-        const yearStart = new Date(2025, 0, 1);
+        // Calculate and update emissions since January 1st of the current year
+        const yearStart = new Date(new Date().getFullYear(), 0, 1);
         const yearlyElapsedSeconds = (Date.now() - yearStart) / 1000;
         const yearlyEmissions = EMISSIONS_PER_SECOND * yearlyElapsedSeconds;
         formatNumberWithAnimation(yearlyEmissionsElement, yearlyEmissions);
@@ -124,15 +127,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Carbon Budget Counter Logic
     function updateCarbonBudgetCounter() {
-        const now = performance.now();
-        const startDate = new Date('2024-01-01').getTime();
-        const endDate = new Date('2029-01-01').getTime();
-        const elapsedTime = Date.now() - startDate;
-        const totalTimespan = endDate - startDate;
-        const elapsedPercentage = (elapsedTime / totalTimespan) * 100;
-        
+        const elapsedTime = Date.now() - BUDGET_REFERENCE_DATE;
+
         // Calculate remaining budget with high precision
-        const emissionsPerMs = EMISSIONS_PER_YEAR / (365 * 24 * 60 * 60 * 1000);
+        const emissionsPerMs = EMISSIONS_PER_YEAR / MS_PER_YEAR;
         const emittedSoFar = elapsedTime * emissionsPerMs;
         const remainingBudget = Math.max(0, CARBON_BUDGET_START - emittedSoFar);
         
@@ -152,6 +150,24 @@ document.addEventListener('DOMContentLoaded', function() {
         const yearsRemaining = remainingBudget / EMISSIONS_PER_YEAR;
         document.getElementById('budget-years-remaining').textContent = Math.max(0, Math.round(yearsRemaining * 10) / 10);
     }
+
+    // Fill in year labels so they never go stale
+    function updateDateLabels() {
+        const year = String(new Date().getFullYear());
+        const depletionYear = String(BUDGET_DEPLETION_DATE.getUTCFullYear());
+        const setText = (id, text) => {
+            const el = document.getElementById(id);
+            if (el) el.textContent = text;
+        };
+        setText('currentYear', year);
+        setText('yearReference', year);
+        setText('copyright-year', year);
+        setText('budget-start-label', `${new Date(BUDGET_REFERENCE_DATE).getUTCFullYear()} (${CARBON_BUDGET_START} Gt)`);
+        setText('budget-end-label', `${depletionYear} (0 Gt)`);
+        setText('budget-depletion-year', depletionYear);
+        setText('budget-rate', String(EMISSIONS_PER_YEAR));
+    }
+    updateDateLabels();
 
     // Update all counters with precise timing
     function updateCounters(currentTime) {
