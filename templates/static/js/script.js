@@ -213,19 +213,22 @@ document.addEventListener('DOMContentLoaded', function() {
             label: 'CO₂ Emissions (million tons)',
             data: [12667, 4853, 2693, 1909, 1083, 729, 691, 673, 663, 636],
             backgroundColor: [
-                'rgba(74, 226, 144, 0.8)',
-                'rgba(74, 226, 144, 0.75)',
-                'rgba(74, 226, 144, 0.7)',
-                'rgba(74, 226, 144, 0.65)',
-                'rgba(74, 226, 144, 0.6)',
-                'rgba(74, 226, 144, 0.55)',
-                'rgba(74, 226, 144, 0.5)',
-                'rgba(74, 226, 144, 0.45)',
-                'rgba(74, 226, 144, 0.4)',
-                'rgba(74, 226, 144, 0.35)'
+                'rgba(52, 211, 153, 0.8)',
+                'rgba(52, 211, 153, 0.75)',
+                'rgba(52, 211, 153, 0.7)',
+                'rgba(52, 211, 153, 0.65)',
+                'rgba(52, 211, 153, 0.6)',
+                'rgba(52, 211, 153, 0.55)',
+                'rgba(52, 211, 153, 0.5)',
+                'rgba(52, 211, 153, 0.45)',
+                'rgba(52, 211, 153, 0.4)',
+                'rgba(52, 211, 153, 0.35)'
             ],
-            borderColor: 'rgba(74, 226, 144, 1)',
-            borderWidth: 1
+            borderColor: 'rgba(52, 211, 153, 1)',
+            borderWidth: 0,
+            borderRadius: 6,
+            borderSkipped: false,
+            maxBarThickness: 28
         }]
     };
 
@@ -245,18 +248,21 @@ document.addEventListener('DOMContentLoaded', function() {
             label: 'CO₂ Emissions (kg)',
             data: [350, 100, 65, 60, 30, 25, 6.5, 0.7, 0.1],
             backgroundColor: [
-                'rgba(74, 226, 144, 0.8)',
-                'rgba(74, 226, 144, 0.75)',
-                'rgba(74, 226, 144, 0.7)',
-                'rgba(74, 226, 144, 0.65)',
-                'rgba(74, 226, 144, 0.6)',
-                'rgba(74, 226, 144, 0.55)',
-                'rgba(74, 226, 144, 0.5)',
-                'rgba(74, 226, 144, 0.45)',
-                'rgba(74, 226, 144, 0.4)'
+                'rgba(52, 211, 153, 0.8)',
+                'rgba(52, 211, 153, 0.75)',
+                'rgba(52, 211, 153, 0.7)',
+                'rgba(52, 211, 153, 0.65)',
+                'rgba(52, 211, 153, 0.6)',
+                'rgba(52, 211, 153, 0.55)',
+                'rgba(52, 211, 153, 0.5)',
+                'rgba(52, 211, 153, 0.45)',
+                'rgba(52, 211, 153, 0.4)'
             ],
-            borderColor: 'rgba(74, 226, 144, 1)',
-            borderWidth: 1
+            borderColor: 'rgba(52, 211, 153, 1)',
+            borderWidth: 0,
+            borderRadius: 6,
+            borderSkipped: false,
+            maxBarThickness: 28
         }]
     };
 
@@ -277,19 +283,22 @@ document.addEventListener('DOMContentLoaded', function() {
             label: 'CO₂ Emissions (Million Metric Tons)',
             data: [275.28, 250, 160, 150, 142, 130, 120, 110, 100, 90],
             backgroundColor: [
-                'rgba(74, 226, 144, 0.8)',
-                'rgba(74, 226, 144, 0.75)',
-                'rgba(74, 226, 144, 0.7)',
-                'rgba(74, 226, 144, 0.65)',
-                'rgba(74, 226, 144, 0.6)',
-                'rgba(74, 226, 144, 0.55)',
-                'rgba(74, 226, 144, 0.5)',
-                'rgba(74, 226, 144, 0.45)',
-                'rgba(74, 226, 144, 0.4)',
-                'rgba(74, 226, 144, 0.35)'
+                'rgba(52, 211, 153, 0.8)',
+                'rgba(52, 211, 153, 0.75)',
+                'rgba(52, 211, 153, 0.7)',
+                'rgba(52, 211, 153, 0.65)',
+                'rgba(52, 211, 153, 0.6)',
+                'rgba(52, 211, 153, 0.55)',
+                'rgba(52, 211, 153, 0.5)',
+                'rgba(52, 211, 153, 0.45)',
+                'rgba(52, 211, 153, 0.4)',
+                'rgba(52, 211, 153, 0.35)'
             ],
-            borderColor: 'rgba(74, 226, 144, 1)',
-            borderWidth: 1
+            borderColor: 'rgba(52, 211, 153, 1)',
+            borderWidth: 0,
+            borderRadius: 6,
+            borderSkipped: false,
+            maxBarThickness: 28
         }]
     };
 
@@ -349,11 +358,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     display: false
                 },
                 tooltip: {
-                    backgroundColor: 'rgba(26, 35, 50, 0.95)',
-                    titleColor: '#4AE290',
-                    bodyColor: '#fff',
+                    backgroundColor: 'rgba(8, 19, 15, 0.97)',
+                    borderColor: 'rgba(52, 211, 153, 0.32)',
+                    borderWidth: 1,
+                    titleColor: '#34d399',
+                    bodyColor: '#ecfdf5',
+                    titleFont: { family: "'Fira Sans', system-ui, sans-serif", weight: '600' },
+                    bodyFont: { family: "'Fira Code', ui-monospace, monospace" },
                     padding: 12,
-                    cornerRadius: 8,
+                    cornerRadius: 10,
                     displayColors: false,
                     callbacks: {
                         label: function(context) {
@@ -368,18 +381,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 x: {
                     beginAtZero: true,
                     grid: {
-                        color: 'rgba(255, 255, 255, 0.1)'
+                        color: 'rgba(52, 211, 153, 0.08)'
+                    },
+                    border: {
+                        display: false
                     },
                     ticks: {
-                        color: '#fff'
+                        color: '#7f9c91',
+                        font: { family: "'Fira Code', ui-monospace, monospace", size: 11 }
                     }
                 },
                 y: {
                     grid: {
                         display: false
                     },
+                    border: {
+                        display: false
+                    },
                     ticks: {
-                        color: '#fff'
+                        color: '#a3bfb4',
+                        font: { family: "'Fira Sans', system-ui, sans-serif", size: 13 }
                     }
                 }
             }
@@ -403,21 +424,39 @@ document.addEventListener('DOMContentLoaded', function() {
         data: cityData
     });
 
-    // Info button event listeners
-    document.querySelectorAll('.info-button').forEach(button => {
-        button.addEventListener('mouseenter', function() {
-            const tooltip = this.nextElementSibling;
-            if (tooltip && tooltip.classList.contains('info-tooltip')) {
-                tooltip.style.display = 'block';
-            }
-        });
+    // Info tooltips: open on hover, keyboard focus, or tap; close with Escape
+    const infoButtons = document.querySelectorAll('.info-button');
 
-        button.addEventListener('mouseleave', function() {
-            const tooltip = this.nextElementSibling;
-            if (tooltip && tooltip.classList.contains('info-tooltip')) {
-                tooltip.style.display = 'none';
-            }
+    function setTooltip(button, open) {
+        const tooltip = button.nextElementSibling;
+        if (!tooltip || !tooltip.classList.contains('info-tooltip')) return;
+        tooltip.classList.toggle('is-open', open);
+        button.setAttribute('aria-expanded', String(open));
+    }
+
+    function closeAllTooltips(except) {
+        infoButtons.forEach(other => {
+            if (other !== except) setTooltip(other, false);
         });
+    }
+
+    infoButtons.forEach(button => {
+        button.addEventListener('mouseenter', () => { closeAllTooltips(button); setTooltip(button, true); });
+        button.addEventListener('mouseleave', () => setTooltip(button, false));
+        button.addEventListener('focus', () => { closeAllTooltips(button); setTooltip(button, true); });
+        button.addEventListener('blur', () => setTooltip(button, false));
+        button.addEventListener('click', (e) => {
+            // Hover/focus already opened it, so a click (or tap) only keeps it open;
+            // clicking elsewhere or pressing Escape closes it
+            e.stopPropagation();
+            closeAllTooltips(button);
+            setTooltip(button, true);
+        });
+    });
+
+    document.addEventListener('click', () => closeAllTooltips());
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeAllTooltips();
     });
 
     // Chart Navigation
@@ -430,8 +469,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Create navigation dots
     chartContainers.forEach((_, index) => {
-        const dot = document.createElement('span');
+        const dot = document.createElement('button');
+        dot.type = 'button';
         dot.classList.add('dot');
+        dot.setAttribute('aria-label', `Show chart ${index + 1} of ${chartContainers.length}`);
         if (index === 0) dot.classList.add('active');
         dot.addEventListener('click', () => showChart(index));
         chartDots.appendChild(dot);
@@ -442,12 +483,13 @@ document.addEventListener('DOMContentLoaded', function() {
             chart.style.display = index === currentChartIndex ? 'block' : 'none';
         });
         chartTitles.forEach((title, index) => {
-            title.style.display = index === currentChartIndex ? 'block' : 'none';
+            title.style.display = index === currentChartIndex ? '' : 'none';
         });
         // Update dots
         const dots = document.querySelectorAll('.dot');
         dots.forEach((dot, index) => {
             dot.classList.toggle('active', index === currentChartIndex);
+            dot.setAttribute('aria-current', index === currentChartIndex ? 'true' : 'false');
         });
         // Update button states
         prevButton.classList.toggle('disabled', currentChartIndex === 0);
@@ -486,10 +528,12 @@ document.addEventListener('DOMContentLoaded', function() {
             faqItems.forEach(otherItem => {
                 if (otherItem !== item && otherItem.classList.contains('active')) {
                     otherItem.classList.remove('active');
+                    otherItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
                 }
             });
             // Toggle current item
-            item.classList.toggle('active');
+            const isOpen = item.classList.toggle('active');
+            question.setAttribute('aria-expanded', String(isOpen));
         });
     });
 
@@ -497,27 +541,36 @@ document.addEventListener('DOMContentLoaded', function() {
     const menuBtn = document.querySelector('.nav-toggle');
     const menuItems = document.querySelector('.nav-items');
 
+    function setMenu(open) {
+        menuBtn.classList.toggle('active', open);
+        menuItems.classList.toggle('show', open);
+        menuBtn.setAttribute('aria-expanded', String(open));
+        menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    }
+
     if (menuBtn && menuItems) {
         menuBtn.addEventListener('click', (e) => {
             e.stopPropagation(); // Prevent click from bubbling to document
-            menuBtn.classList.toggle('active');
-            menuItems.classList.toggle('show');
+            setMenu(!menuItems.classList.contains('show'));
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && menuItems.classList.contains('show')) {
+                setMenu(false);
+                menuBtn.focus();
+            }
         });
 
         // Close menu when clicking a link
         const menuLinks = menuItems.querySelectorAll('a');
         menuLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                menuBtn.classList.remove('active');
-                menuItems.classList.remove('show');
-            });
+            link.addEventListener('click', () => setMenu(false));
         });
 
         // Close menu when clicking outside
         document.addEventListener('click', (e) => {
             if (!menuBtn.contains(e.target) && !menuItems.contains(e.target)) {
-                menuBtn.classList.remove('active');
-                menuItems.classList.remove('show');
+                setMenu(false);
             }
         });
 
@@ -534,8 +587,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const targetId = this.getAttribute('href');
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
+                const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
                 targetElement.scrollIntoView({
-                    behavior: 'smooth',
+                    behavior: reduceMotion ? 'auto' : 'smooth',
                     block: 'start'
                 });
             }
