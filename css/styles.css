@@ -58,6 +58,14 @@ body {
     animation: particleFloat 8s infinite;
 }
 
+.particle:nth-child(1) { left: 10%; width: 2px; height: 2px; }
+.particle:nth-child(2) { left: 20%; width: 3px; height: 3px; animation-delay: 2s; }
+.particle:nth-child(3) { left: 35%; width: 2px; height: 2px; animation-delay: 4s; }
+.particle:nth-child(4) { left: 50%; width: 4px; height: 4px; animation-delay: 6s; }
+.particle:nth-child(5) { left: 65%; width: 2px; height: 2px; animation-delay: 3s; }
+.particle:nth-child(6) { left: 80%; width: 3px; height: 3px; animation-delay: 5s; }
+.particle:nth-child(7) { left: 90%; width: 2px; height: 2px; animation-delay: 1s; }
+
 @keyframes particleFloat {
     0% {
         transform: translateY(0) translateX(0);
@@ -93,13 +101,6 @@ body {
     text-align: center;
     margin-bottom: 2rem;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-}
-
-.title-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
 }
 
 .title {
@@ -241,7 +242,7 @@ body {
     bottom: -0.1em;
 }
 
-.time-ago, .time-info {
+.time-ago {
     color: var(--accent-color);
     font-size: 0.9rem;
     opacity: 0.9;
@@ -346,14 +347,6 @@ body {
     transform: rotate(180deg);
 }
 
-.faq-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 1.5rem;
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
 .faq-item {
     background-color: var(--card-bg);
     padding: 1.5rem;
@@ -383,67 +376,11 @@ body {
     flex-grow: 1;
 }
 
-.emissions-chart {
-    margin: 3rem auto;
-    padding: 2rem;
-    background-color: var(--card-bg);
-    border-radius: 1rem;
-    max-width: 900px;
-}
-
-.emissions-chart h2 {
-    color: var(--accent-color);
-    font-size: 1.5rem;
-    font-weight: 500;
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
 .chart-container {
     position: relative;
     width: 100%;
     height: 400px;
     margin: 0 auto;
-}
-
-.chart-tooltip {
-    display: none;
-    position: fixed;
-    background: rgba(26, 35, 50, 0.95);
-    border: 2px solid var(--accent-color);
-    padding: 1rem;
-    border-radius: 0.5rem;
-    pointer-events: none;
-    z-index: 100;
-    max-width: 300px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(8px);
-    transition: all 0.1s ease;
-}
-
-.chart-tooltip h3 {
-    color: var(--accent-color);
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-}
-
-.chart-tooltip p {
-    color: var(--secondary-text);
-    font-size: 0.9rem;
-    line-height: 1.4;
-    margin-bottom: 0.5rem;
-}
-
-.chart-tooltip p.emissions {
-    color: var(--text-color);
-    font-weight: 500;
-    font-size: 1rem;
-}
-
-.chart-tooltip p.percentage {
-    color: var(--accent-color);
-    font-weight: 500;
 }
 
 .chart-section {
@@ -467,6 +404,10 @@ body {
     margin: 0 1rem;
 }
 
+.chart-title[hidden] {
+    display: none;
+}
+
 .chart-title {
     color: #fff;
     font-size: 1.5rem;
@@ -481,12 +422,6 @@ body {
 
 .chart-title span {
     display: block;
-}
-
-.title-info {
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .info-button {
@@ -555,6 +490,7 @@ body {
 }
 
 .progress {
+    width: 0;
     height: 100%;
     background: var(--accent-color);
     border-radius: 4px;
@@ -576,10 +512,6 @@ body {
     min-width: 80px;
 }
 
-.progress.critical {
-    background: #ff4444;
-}
-
 .additional-info {
     margin-top: 1.5rem;
     padding: 1.5rem;
@@ -596,18 +528,6 @@ body {
 .additional-info span {
     color: var(--accent-color);
     font-weight: 500;
-}
-
-/* Make the counter more attention-grabbing when budget is low */
-@keyframes urgentPulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.7; }
-    100% { opacity: 1; }
-}
-
-.counter-value.urgent {
-    animation: urgentPulse 2s infinite;
-    color: #ff4444;
 }
 
 /* Navigation Menu */
@@ -820,51 +740,9 @@ body {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.nav-dropdown {
-    display: flex;
-    gap: 1rem;
-}
-
 @media screen and (max-width: 768px) {
     .nav-toggle {
         display: flex;
-    }
-
-    .nav-dropdown {
-        display: none;
-        position: absolute;
-        top: 100%;
-        right: 0;
-        background: var(--card-bg);
-        border-radius: 0.8rem;
-        padding: 1rem;
-        margin-top: 0.5rem;
-        min-width: 200px;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-
-    .nav-dropdown.active {
-        display: flex;
-    }
-
-    .nav-dropdown a {
-        padding: 0.8rem 1rem;
-        border-radius: 0.5rem;
-        transition: background-color 0.2s ease;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    .nav-dropdown a:hover {
-        background-color: rgba(74, 226, 144, 0.1);
-    }
-
-    .nav-dropdown a svg {
-        width: 16px;
-        height: 16px;
     }
 }
 
@@ -892,29 +770,6 @@ nav.nav-menu {
 .nav-toggle:hover {
     background: rgba(74, 226, 144, 0.1);
     border-color: rgba(74, 226, 144, 0.4);
-}
-
-.nav-dropdown {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background: var(--card-bg);
-    border-radius: 0.8rem;
-    padding: 0.5rem;
-    margin-top: 0.5rem;
-    min-width: 220px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
-    transition: all 0.3s ease;
-    z-index: 1000;
-}
-
-.nav-dropdown.active {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
 }
 
 .nav-item {
@@ -968,34 +823,6 @@ nav.nav-menu {
     stroke: currentColor;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.disclaimer-section {
-    padding: 20px;
-    margin-top: 20px;
-    border-top: 1px solid #ddd;
-}
-
-.disclaimer-section h3 {
-    color: #333;
-    margin-bottom: 15px;
-}
-
-.disclaimer-section h4 {
-    color: #444;
-    margin: 15px 0 10px;
-    font-size: 1.1em;
-}
-
 .disclaimer-content {
     font-size: 0.9em;
     line-height: 1.6;
@@ -1010,12 +837,6 @@ nav.nav-menu {
 
 .disclaimer-content li {
     margin-bottom: 8px;
-}
-
-.disclaimer-agreement {
-    margin-top: 20px;
-    font-weight: 500;
-    color: #555;
 }
 
 /* Footer Styles */
@@ -1061,22 +882,15 @@ nav.nav-menu {
 }
 
 /* Disclaimer Page Styles */
+.back-link,
+.disclaimer-content a {
+    color: var(--accent-color);
+}
+
 .disclaimer-page {
     max-width: 800px;
     margin: 0 auto;
     padding: 2rem;
-}
-
-.back-button {
-    display: inline-block;
-    color: var(--accent-color);
-    text-decoration: none;
-    margin-bottom: 2rem;
-    transition: opacity 0.3s ease;
-}
-
-.back-button:hover {
-    opacity: 0.8;
 }
 
 .disclaimer-content {
@@ -1167,16 +981,8 @@ nav.nav-menu {
         grid-template-columns: 1fr;
     }
 
-    .faq-grid {
-        grid-template-columns: 1fr;
-    }
-
     .faq-item {
         margin-bottom: 1rem;
-    }
-
-    .emissions-chart {
-        padding: 1rem;
     }
 
     .chart-container {
@@ -1237,14 +1043,6 @@ nav.nav-menu {
         width: 36px;
         height: 36px;
     }
-
-    .info-text {
-        display: none;
-    }
-}
-
-.main-header {
-    display: none;
 }
 
 main {
@@ -1313,27 +1111,6 @@ main {
 .footer-section ul li a:hover {
     color: #4AE290;
     transform: translateX(5px);
-}
-
-.footer-bottom {
-    text-align: center;
-    margin-top: 3rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid rgba(74, 226, 144, 0.2);
-}
-
-.footer-bottom p {
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 0.9rem;
-}
-
-.copyright-notice {
-    text-align: center;
-    padding: 10px;
-    background-color: #f5f5f5;
-    color: #666;
-    font-size: 0.9em;
-    border-top: 1px solid #ddd;
 }
 
 /* Media Queries for Responsive Design */
@@ -1480,22 +1257,6 @@ main {
     .faq-answer {
         font-size: 0.9rem;
     }
-
-    .nav-dropdown {
-        width: 100%;
-        right: 0;
-        left: 0;
-        border-radius: 0;
-        margin-top: 0;
-        position: fixed;
-        background: var(--primary-bg);
-    }
-
-    .nav-dropdown.active {
-        height: auto;
-        max-height: calc(100vh - 60px);
-        overflow-y: auto;
-    }
 }
 
 @media screen and (max-width: 480px) {
@@ -1523,9 +1284,5 @@ main {
     .nav-button {
         width: 36px;
         height: 36px;
-    }
-
-    .info-text {
-        display: none;
     }
 }

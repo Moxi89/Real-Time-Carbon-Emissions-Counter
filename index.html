@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carbon Emissions Counter Live | Real-Time Global CO₂ Tracking</title>
     <meta name="description" content="Track real-time global carbon emissions with our live CO₂ counter. Monitor yearly emissions, country-specific data, and remaining carbon budget to limit global warming to 1.5°C.">
-    <meta name="keywords" content="carbon emissions, CO2 counter, global warming, climate change, real-time emissions, carbon budget">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
@@ -14,7 +13,7 @@
     <meta property="og:description" content="Track real-time global carbon emissions with our live CO₂ counter. Monitor yearly emissions, country-specific data, and remaining carbon budget.">
     
     <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:card" content="summary">
     <meta name="twitter:url" content="https://www.carbonemissionscounter.com/">
     <meta name="twitter:title" content="Carbon Emissions Counter Live | Real-Time Global CO₂ Tracking">
     <meta name="twitter:description" content="Track real-time global carbon emissions with our live CO₂ counter. Monitor yearly emissions, country-specific data, and remaining carbon budget.">
@@ -30,13 +29,13 @@
 </head>
 <body>
     <div class="background-particles">
-        <div class="particle" style="left: 10%; width: 2px; height: 2px;"></div>
-        <div class="particle" style="left: 20%; width: 3px; height: 3px; animation-delay: 2s;"></div>
-        <div class="particle" style="left: 35%; width: 2px; height: 2px; animation-delay: 4s;"></div>
-        <div class="particle" style="left: 50%; width: 4px; height: 4px; animation-delay: 6s;"></div>
-        <div class="particle" style="left: 65%; width: 2px; height: 2px; animation-delay: 3s;"></div>
-        <div class="particle" style="left: 80%; width: 3px; height: 3px; animation-delay: 5s;"></div>
-        <div class="particle" style="left: 90%; width: 2px; height: 2px; animation-delay: 1s;"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
     </div>
     <div class="container">
         <nav class="nav-menu">
@@ -161,7 +160,7 @@
                     </div>
                     <div class="progress-container">
                         <div class="progress-bar">
-                            <div id="carbon-budget-progress" class="progress" style="width: 0%"></div>
+                            <div id="carbon-budget-progress" class="progress"></div>
                         </div>
                         <div class="progress-labels">
                             <span>2024 (200 Gt)</span>
@@ -208,7 +207,7 @@
                                 This bar chart illustrates the top 10 countries with the largest CO₂ emissions in 2022-2023. China leads with 32.88% of global emissions, followed by the United States at 12.6%. India, Russia, and Japan round out the top five. The data highlights the significant impact of industrial activities, energy production, and population size on emissions. Notably, China's emissions exceed the combined total of the next three highest emitters.
                             </div>
                         </h2>
-                        <h2 class="chart-title" style="display: none;">
+                        <h2 class="chart-title" hidden>
                             Product Carbon Footprint
                             <button class="info-button product-info" aria-label="Product chart information">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -220,7 +219,7 @@
                                 Average carbon footprint of common consumer items. Manufacturing processes and materials significantly impact emissions. Electronics like laptops (350 kg) have the highest footprint, while everyday items like plastic bottles (0.1 kg) have relatively lower impact. Understanding these values helps consumers make environmentally conscious choices.
                             </div>
                         </h2>
-                        <h2 class="chart-title" style="display: none;">
+                        <h2 class="chart-title" hidden>
                             City Emissions Impact
                             <button class="info-button city-info" aria-label="City chart information">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">

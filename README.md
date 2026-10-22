@@ -17,12 +17,15 @@ A real-time carbon emissions counter that tracks global CO₂ emissions. Visit t
 ├── .github/workflows/deploy.yml  # CI build check
 ├── css/                          # Stylesheets
 ├── js/                           # JavaScript files
+├── 404.html                      # Not-found page
 ├── _headers                      # Cloudflare Pages headers configuration
 ├── build.sh                      # Build script (copies the site into dist/)
 ├── disclaimer.html               # Disclaimer page
 ├── favicon.svg                   # Site icon
 ├── index.html                    # Main HTML file
-└── package.json                  # Project configuration
+├── package.json                  # Project configuration
+├── robots.txt                    # Search engine rules
+└── sitemap.xml                   # Page list for search engines
 ```
 
 ## Development

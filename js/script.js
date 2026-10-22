@@ -373,7 +373,7 @@ document.addEventListener('DOMContentLoaded', function() {
             chart.style.display = index === currentChartIndex ? 'block' : 'none';
         });
         chartTitles.forEach((title, index) => {
-            title.style.display = index === currentChartIndex ? 'block' : 'none';
+            title.hidden = index !== currentChartIndex;
         });
         // Update dots
         const dots = document.querySelectorAll('.dot');
