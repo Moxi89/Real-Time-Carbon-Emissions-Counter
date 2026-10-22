@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Constants for emissions counter
-    const FPS = 60;
     const EMISSIONS_PER_YEAR = 41.6; // Gt CO₂ per year
     const CARBON_BUDGET_START = 200; // Gt CO₂ in 2024
     const SECONDS_PER_YEAR = 365.25 * 24 * 60 * 60;
@@ -82,12 +81,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function formatNumberWithAnimation(element, value) {
-        const currentValue = parseFloat(element.textContent.replace(/,/g, '')) || 0;
-        const diff = value - currentValue;
-        const step = diff / (FPS / 4); // Smooth transition over 1/4 second
-        
-        element.textContent = formatNumber(currentValue + step);
+    // Counters update every frame, so show the true value directly
+    function setCounter(element, value) {
+        element.textContent = formatNumber(value);
     }
 
     // Special formatting for carbon budget (keeping one decimal place)
@@ -101,19 +97,19 @@ document.addEventListener('DOMContentLoaded', function() {
         const totalEmissions = EMISSIONS_PER_SECOND * elapsedSeconds;
         
         // Update total emissions since page load
-        formatNumberWithAnimation(totalEmissionsElement, totalEmissions);
+        setCounter(totalEmissionsElement, totalEmissions);
         
         // Calculate and update yearly emissions
         const yearlyElapsedSeconds = (Date.now() - startOfYear) / 1000;
         const yearlyEmissions = EMISSIONS_PER_SECOND * yearlyElapsedSeconds;
-        formatNumberWithAnimation(yearlyEmissionsElement, yearlyEmissions);
+        setCounter(yearlyEmissionsElement, yearlyEmissions);
         
         // Update country emissions
         const selectedCountry = countrySelect.value;
         const countryData = countryEmissionsData[selectedCountry];
         const countryEmissions = (totalEmissions * countryData.percentage) / 100;
         
-        formatNumberWithAnimation(countryEmissionsElement, countryEmissions);
+        setCounter(countryEmissionsElement, countryEmissions);
         countryInfoElement.textContent = `${countryData.percentage}% of global emissions`;
     }
 
@@ -128,13 +124,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Carbon Budget Counter Logic
     function updateCarbonBudgetCounter() {
         const startDate = new Date('2024-01-01').getTime();
-        const endDate = new Date('2029-01-01').getTime();
         const elapsedTime = Date.now() - startDate;
-        const totalTimespan = endDate - startDate;
-        const elapsedPercentage = (elapsedTime / totalTimespan) * 100;
         
         // Calculate remaining budget with high precision
-        const emissionsPerMs = EMISSIONS_PER_YEAR / (365 * 24 * 60 * 60 * 1000);
+        const emissionsPerMs = EMISSIONS_PER_YEAR / (SECONDS_PER_YEAR * 1000);
         const emittedSoFar = elapsedTime * emissionsPerMs;
         const remainingBudget = Math.max(0, CARBON_BUDGET_START - emittedSoFar);
         
@@ -333,21 +326,13 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     // Initialize Charts
-    const charts = document.querySelectorAll('.chart-container canvas');
-    const countryChart = new Chart(charts[0], {
-        ...chartConfig,
-        data: countryData
-    });
-
-    const productChart = new Chart(charts[1], {
-        ...chartConfig,
-        data: productData
-    });
-
-    const cityChart = new Chart(charts[2], {
-        ...chartConfig,
-        data: cityData
-    });
+    // Skip charts if Chart.js failed to load, so the rest of the page keeps working
+    if (typeof Chart !== 'undefined') {
+        const charts = document.querySelectorAll('.chart-container canvas');
+        new Chart(charts[0], { ...chartConfig, data: countryData });
+        new Chart(charts[1], { ...chartConfig, data: productData });
+        new Chart(charts[2], { ...chartConfig, data: cityData });
+    }
 
     // Info button event listeners
     document.querySelectorAll('.info-button').forEach(button => {
